@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-community/netinfo": "^6.0.0",
     "@react-navigation/native": "^5.9.4",
     "@reduxjs/toolkit": "^1.5.1",
     "react": "16.13.1",
