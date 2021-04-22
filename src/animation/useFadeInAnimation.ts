@@ -2,7 +2,7 @@ import {useRef, useEffect} from 'react';
 import {Animated} from 'react-native';
 
 const useFadeInAnimation = ({duration = 800}: {duration?: number}) => {
-  const opacity = useRef(new Animated.Value(0)).current;
+  const opacity = useRef<Animated.Value>(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.timing(opacity, {
