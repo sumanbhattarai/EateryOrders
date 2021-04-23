@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {Text, TextProps, TextStyle} from 'react-native';
+import {Text as RNText, TextProps, TextStyle} from 'react-native';
 
 import Fonts from 'utils/Fonts';
 import {wp} from 'utils/Constants';
@@ -10,7 +10,7 @@ interface Props extends TextProps {
   children: ReactNode;
 }
 
-const CustomText = ({type = 'regular', style, children, ...rest}: Props) => {
+const Text = ({type = 'regular', style, children, ...rest}: Props) => {
   const getStyling = (): TextStyle => {
     switch (type) {
       case 'regular':
@@ -31,10 +31,10 @@ const CustomText = ({type = 'regular', style, children, ...rest}: Props) => {
     }
   };
   return (
-    <Text style={[getStyling(), style]} {...rest}>
+    <RNText style={[getStyling(), style]} {...rest}>
       {children}
-    </Text>
+    </RNText>
   );
 };
 
-export default CustomText;
+export default Text;
