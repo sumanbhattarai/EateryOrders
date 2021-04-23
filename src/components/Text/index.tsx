@@ -5,12 +5,39 @@ import Fonts from 'utils/Fonts';
 import {wp} from 'utils/Constants';
 import Colors from 'utils/Colors';
 
+type TextType = 'regular' | 'heading' | 'tiny';
+
 interface Props extends TextProps {
-  type?: 'regular' | 'heading' | 'tiny';
+  type?: TextType;
   color?: string;
   style?: TextStyle;
   children: ReactNode;
 }
+
+const getStyling = (type: TextType): TextStyle => {
+  switch (type) {
+    case 'regular':
+      return {
+        fontSize: wp(4.4),
+        fontFamily: Fonts.regular,
+      };
+    case 'heading':
+      return {
+        fontSize: wp(6.4),
+        fontFamily: Fonts.bold,
+      };
+    case 'tiny':
+      return {
+        fontSize: wp(3.4),
+        fontFamily: Fonts.light,
+      };
+    default:
+      return {
+        fontSize: wp(4.4),
+        fontFamily: Fonts.regular,
+      };
+  }
+};
 
 const Text = ({
   type = 'regular',
@@ -19,32 +46,8 @@ const Text = ({
   children,
   ...rest
 }: Props) => {
-  const getStyling = (): TextStyle => {
-    switch (type) {
-      case 'regular':
-        return {
-          fontSize: wp(4.4),
-          fontFamily: Fonts.regular,
-        };
-      case 'heading':
-        return {
-          fontSize: wp(6.4),
-          fontFamily: Fonts.bold,
-        };
-      case 'tiny':
-        return {
-          fontSize: wp(3.4),
-          fontFamily: Fonts.light,
-        };
-      default:
-        return {
-          fontSize: wp(4.4),
-          fontFamily: Fonts.regular,
-        };
-    }
-  };
   return (
-    <RNText style={[getStyling(), {color: color, ...style}]} {...rest}>
+    <RNText style={[getStyling(type), {color: color, ...style}]} {...rest}>
       {children}
     </RNText>
   );
