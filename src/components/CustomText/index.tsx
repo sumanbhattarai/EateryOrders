@@ -6,10 +6,11 @@ import {wp} from 'utils/Constants';
 
 interface Props extends TextProps {
   type?: 'regular' | 'heading' | 'tiny';
+  style?: TextStyle;
   children: ReactNode;
 }
 
-const CustomText = ({type = 'regular', children, ...rest}: Props) => {
+const CustomText = ({type = 'regular', style, children, ...rest}: Props) => {
   const getStyling = (): TextStyle => {
     switch (type) {
       case 'regular':
@@ -30,7 +31,7 @@ const CustomText = ({type = 'regular', children, ...rest}: Props) => {
     }
   };
   return (
-    <Text style={getStyling()} {...rest}>
+    <Text style={[getStyling(), style]} {...rest}>
       {children}
     </Text>
   );
