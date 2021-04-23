@@ -3,14 +3,22 @@ import {Text as RNText, TextProps, TextStyle} from 'react-native';
 
 import Fonts from 'utils/Fonts';
 import {wp} from 'utils/Constants';
+import Colors from 'utils/Colors';
 
 interface Props extends TextProps {
   type?: 'regular' | 'heading' | 'tiny';
+  color?: string;
   style?: TextStyle;
   children: ReactNode;
 }
 
-const Text = ({type = 'regular', style, children, ...rest}: Props) => {
+const Text = ({
+  type = 'regular',
+  color = Colors.black,
+  style,
+  children,
+  ...rest
+}: Props) => {
   const getStyling = (): TextStyle => {
     switch (type) {
       case 'regular':
@@ -28,10 +36,15 @@ const Text = ({type = 'regular', style, children, ...rest}: Props) => {
           fontSize: wp(3.4),
           fontFamily: Fonts.light,
         };
+      default:
+        return {
+          fontSize: wp(4.4),
+          fontFamily: Fonts.regular,
+        };
     }
   };
   return (
-    <RNText style={[getStyling(), style]} {...rest}>
+    <RNText style={[getStyling(), {color: color, ...style}]} {...rest}>
       {children}
     </RNText>
   );
