@@ -14,10 +14,11 @@ import Confirmed from 'screens/Confirmed';
 import Account from 'screens/Account';
 import Font from 'utils/Fonts';
 import Color from 'utils/Colors';
+import {BottomTabParamList, RootStackParamList, TopTabParamList} from './utils';
 
-const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
-const TopTab = createMaterialTopTabNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator<BottomTabParamList>();
+const TopTab = createMaterialTopTabNavigator<TopTabParamList>();
 
 const OrderTab = () => {
   return (
@@ -91,8 +92,8 @@ const RootNavigation = () => {
           component={BottomNavigation}
           options={{headerShown: false}}
         />
-        <Stack.Screen name="Add new food" component={AddFood} />
-        <Stack.Screen name="Food Detail" component={Detail} />
+        <Stack.Screen name="AddFood" component={AddFood} />
+        <Stack.Screen name="FoodDetal" component={Detail} />
       </Stack.Navigator>
     </NavigationContainer>
   );
