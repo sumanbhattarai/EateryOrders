@@ -29,12 +29,10 @@ const OnBoardCard = ({data}: {data: OnBoardingDataType}) => {
   );
 };
 
-const OnBoarding = () => {
+const OnBoarding = ({onGetStarted}: {onGetStarted: () => void}) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [disabled, setDisabled] = useState<boolean>(true);
   const {opacity} = useFadeInAnimation({});
-
-  const handlePress = () => {};
 
   const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const {nativeEvent} = e;
@@ -82,7 +80,7 @@ const OnBoarding = () => {
           title="Get started"
           // eslint-disable-next-line react-native/no-inline-styles
           style={[styles.button, {opacity: disabled ? 0.7 : 1}]}
-          onPress={handlePress}
+          onPress={onGetStarted}
           disabled={disabled}
         />
       </Animated.View>
