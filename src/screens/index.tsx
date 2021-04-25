@@ -6,7 +6,7 @@ import {
   getHasAppBeenOpenedPreviously,
   setHasAppBeenOpenedPreviously,
 } from 'services/AsyncStore';
-import RootNavigation from 'navigators/RootNavigator';
+import RootNavigator from 'navigators/RootNavigator';
 
 const useAppLoad = () => {
   const [hideOnBoarding, setHideOnBoarding] = useState<boolean>(false);
@@ -33,7 +33,7 @@ const MainFlow = () => {
     return <OnBoarding onGetStarted={updateHideOnBoarding} />;
   }
 
-  return <RootNavigation />;
+  return <RootNavigator />;
 };
 
 export default MainFlow;

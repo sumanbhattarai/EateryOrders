@@ -83,7 +83,7 @@ const BottomNavigation = () => {
   );
 };
 
-const RootNavigation = () => {
+const RootNavigatior = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -99,4 +99,4 @@ const RootNavigation = () => {
   );
 };
 
-export default RootNavigation;
+export default RootNavigatior;
