@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
+import SplashScreen from 'react-native-splash-screen';
 
 import Home from 'screens/Home';
 import OnBoarding from 'screens/OnBoarding';
@@ -14,7 +15,7 @@ const MainFlow = () => {
     (async () => {
       const status: boolean = await getHasAppBeenOpenedPreviously();
       setHideOnBoarding(status);
-    })();
+    })().then(() => SplashScreen.hide());
   }, []);
 
   const handleGetStarted = useCallback(() => {
