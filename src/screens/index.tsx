@@ -6,7 +6,7 @@ import OnBoarding from 'screens/OnBoarding';
 import {
   getHasAppBeenOpenedPreviously,
   setHasAppBeenOpenedPreviously,
-} from '../services/AsyncStore';
+} from 'services/AsyncStore';
 
 const useAppLoad = () => {
   const [hideOnBoarding, setHideOnBoarding] = useState<boolean>(false);

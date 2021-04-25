@@ -25,6 +25,7 @@ module.exports = {
           store: './src/store',
           animation: './src/animation',
           hooks: './src/hooks',
+          services: './src/services',
         },
       },
     ],
