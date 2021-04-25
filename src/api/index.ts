@@ -1,0 +1,42 @@
+import axios, {AxiosRequestConfig} from 'axios';
+
+import Logger from 'utils/Logger';
+
+const APP_URL = 'https://minorii.herokuapp.com';
+
+const client = axios.create({
+  baseURL: APP_URL,
+});
+
+const Routes = {
+  GetCategory: '/listCategory',
+  AddCategory: '/addCategory',
+  AddFood: '/create',
+  GetMenu: '/list',
+  Login: '/signin',
+};
+
+/*
+TODO: Handling something before sending an api request.
+ Like: setting the bearer token before request.
+ */
+
+axios.interceptors.request.use(async (request) => {
+  if (request.url?.includes('signin')) {
+    return request;
+  }
+  // TODO: Set bearer token except for signin
+  return request;
+});
+
+async function makeRequest<R>(config: AxiosRequestConfig): Promise<R> {
+  try {
+    const response = await client.request(config);
+    return response.data as R;
+  } catch (error) {
+    Logger.error(error.message);
+    return error as R;
+  }
+}
+
+export {client, Routes, makeRequest};
