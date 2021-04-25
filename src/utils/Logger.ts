@@ -1,5 +1,5 @@
 import {logger} from 'react-native-logs';
 
-const log = logger.createLogger();
+const Logger = logger.createLogger();
 
-export default log;
+export default Logger;
