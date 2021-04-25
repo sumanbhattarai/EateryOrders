@@ -8,7 +8,7 @@ import {
   setHasAppBeenOpenedPreviously,
 } from '../services/AsyncStore';
 
-const MainFlow = () => {
+const useAppLoad = () => {
   const [hideOnBoarding, setHideOnBoarding] = useState<boolean>(false);
 
   useEffect(() => {
@@ -18,12 +18,18 @@ const MainFlow = () => {
     })().then(() => SplashScreen.hide());
   }, []);
 
-  const handleGetStarted = useCallback(() => {
+  const updateHideOnBoarding = useCallback(() => {
     setHasAppBeenOpenedPreviously(true).then(() => setHideOnBoarding(true));
   }, []);
 
+  return {hideOnBoarding, updateHideOnBoarding};
+};
+
+const MainFlow = () => {
+  const {hideOnBoarding, updateHideOnBoarding} = useAppLoad();
+
   if (!hideOnBoarding) {
-    return <OnBoarding onGetStarted={handleGetStarted} />;
+    return <OnBoarding onGetStarted={updateHideOnBoarding} />;
   }
 
   return <Home />;
