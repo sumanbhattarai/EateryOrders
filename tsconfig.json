@@ -67,7 +67,8 @@
       "store": ["./store/*"],
       "animation": ["./animation/*"],
       "hooks": ["./hooks/*"],
-      "services": ["./services/*"]
+      "services": ["./services/*"],
+      "api": ["./api/*"]
     }
   },
   "exclude": [

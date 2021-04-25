@@ -26,6 +26,7 @@ module.exports = {
           animation: './src/animation',
           hooks: './src/hooks',
           services: './src/services',
+          api: './src/api',
         },
       },
     ],
