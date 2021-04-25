@@ -1,9 +1,9 @@
 import React from 'react';
 
-import OnBoarding from 'screens/OnBoarding';
+import MainFlow from 'screens/';
 
 const App = () => {
-  return <OnBoarding />;
+  return <MainFlow />;
 };
 
 export default App;
