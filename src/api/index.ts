@@ -33,13 +33,13 @@ async function makeRequest<R>(config: AxiosRequestConfig): Promise<R> {
   try {
     const response = await client.request(config);
     return ({
-      success: 'true',
+      success: true,
       data: response.data,
     } as any) as R;
   } catch (error) {
     Logger.error(error.message);
     return ({
-      success: 'false',
+      success: false,
       message: error.message,
     } as any) as R;
   }
