@@ -1,7 +1,7 @@
 export interface IApiResponse<T> {
   success: boolean;
   data?: T;
-  messgae?: string;
+  message?: string;
 }
 
 export interface ICategory {
