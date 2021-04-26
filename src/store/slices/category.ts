@@ -9,8 +9,8 @@ import {apiGetCategory} from 'api/method/category';
 import {ICategory} from 'api/utils';
 import {showError} from 'utils/Toast';
 
-const categoryAdaptor = createEntityAdapter({
-  selectId: (item: ICategory) => item._id,
+const categoryAdaptor = createEntityAdapter<ICategory>({
+  selectId: (item) => item._id,
 });
 
 const initialState = categoryAdaptor.getInitialState({loading: false});
