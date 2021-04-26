@@ -8,6 +8,7 @@ import Button from 'components/Button';
 import {BottomTabParamList, RootStackParamList} from 'navigators/utils';
 import {useAppDispatch} from 'services/TypedRedux';
 import {fetchCategory} from 'store/slices/category';
+import {fetchMenu} from 'store/slices/menu';
 
 interface Props {
   navigation: CompositeNavigationProp<
@@ -21,6 +22,7 @@ const Menu = ({navigation}: Props) => {
 
   const loadAppDataAsync = useCallback(() => {
     dispatch(fetchCategory());
+    dispatch(fetchMenu());
   }, [dispatch]);
 
   useEffect(() => {
