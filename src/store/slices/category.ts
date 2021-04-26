@@ -8,6 +8,7 @@ import {Dispatch} from 'react';
 import {apiGetCategory} from 'api/method/category';
 import {ICategory} from 'api/utils';
 import {showError} from 'utils/Toast';
+import {AppDispatch, RootState} from 'store/';
 
 const categoryAdaptor = createEntityAdapter<ICategory>({
   selectId: (item) => item._id,
@@ -34,9 +35,9 @@ const {fetchAll, toggleLoading} = categorySlice.actions;
 
 const fetchCategory = () => async (
   dispatch: Dispatch<any>,
-  getState: () => any,
+  getState: () => RootState,
 ) => {
-  const loading = getState().category.loading;
+  const {loading} = getState().category;
   if (loading) {
     return;
   }
