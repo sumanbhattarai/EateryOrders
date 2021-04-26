@@ -40,9 +40,4 @@ const showInfo = (options: MessageOptions) =>
     type: 'info',
   });
 
-export default {
-  showError,
-  showSuccess,
-  showInfo,
-  showWarning,
-};
+export {showError, showSuccess, showInfo, showWarning};
