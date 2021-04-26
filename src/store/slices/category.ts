@@ -8,7 +8,7 @@ import {Dispatch} from 'react';
 import {apiGetCategory} from 'api/method/category';
 import {ICategory} from 'api/utils';
 import {showError} from 'utils/Toast';
-import {AppDispatch, RootState} from 'store/';
+import {RootState} from 'store/';
 
 const categoryAdaptor = createEntityAdapter<ICategory>({
   selectId: (item) => item._id,
