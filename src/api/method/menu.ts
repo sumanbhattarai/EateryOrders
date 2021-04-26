@@ -1,7 +1,8 @@
 import {makeRequest, Routes} from 'api/';
+import {IApiResponse, IMenu} from 'api/utils';
 
 const apiGetMenu = () =>
-  makeRequest({
+  makeRequest<IApiResponse<IMenu[]>>({
     url: Routes.GetMenu,
     method: 'GET',
   });
