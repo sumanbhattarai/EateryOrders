@@ -46,7 +46,6 @@ const fetchCategory = () => async (
   if (response.success) {
     dispatch(fetchAll(response.data!));
   } else {
-    showError({message: response.message!});
     dispatch(toggleLoading());
   }
 };
