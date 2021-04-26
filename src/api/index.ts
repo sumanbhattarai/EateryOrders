@@ -32,10 +32,16 @@ axios.interceptors.request.use(async (request) => {
 async function makeRequest<R>(config: AxiosRequestConfig): Promise<R> {
   try {
     const response = await client.request(config);
-    return response.data as R;
+    return ({
+      success: 'true',
+      data: response.data,
+    } as any) as R;
   } catch (error) {
     Logger.error(error.message);
-    return error as R;
+    return ({
+      success: 'false',
+      message: error.message,
+    } as any) as R;
   }
 }
 

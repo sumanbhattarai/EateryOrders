@@ -1,14 +1,15 @@
 import {makeRequest, Routes} from 'api/';
+import {IApiResponse, ICategory} from 'api/utils';
 
-const apiAddCategory = (data: any) =>
-  makeRequest({
+const apiAddCategory = (data: {name: string}) =>
+  makeRequest<IApiResponse<ICategory>>({
     url: Routes.AddCategory,
     method: 'POST',
     data,
   });
 
 const apiGetCategory = () =>
-  makeRequest({
+  makeRequest<IApiResponse<ICategory[]>>({
     url: Routes.GetCategory,
     method: 'GET',
   });
