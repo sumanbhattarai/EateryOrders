@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   FlatList,
   View,
@@ -31,18 +31,18 @@ const OnBoardCard = ({data}: {data: OnBoardingDataType}) => {
 
 const OnBoarding = ({onGetStarted}: {onGetStarted: () => void}) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [disabled, setDisabled] = useState<boolean>(true);
+  const disabled = useRef<boolean>(true);
   const {opacity} = useFadeInAnimation({});
 
   const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const {nativeEvent} = e;
     const index: number = Math.round(nativeEvent.contentOffset.x / Width);
     if (activeIndex !== index) {
+      // checking if the user has reached to the last slide.
+      if (index >= onBoardingData.length - 1) {
+        disabled.current = false;
+      }
       setActiveIndex(index);
-    }
-    // check if user has reached to the last slide
-    if (activeIndex === onBoardingData.length - 1) {
-      setDisabled(false);
     }
   };
 
@@ -79,9 +79,9 @@ const OnBoarding = ({onGetStarted}: {onGetStarted: () => void}) => {
         <Button
           title="Get started"
           // eslint-disable-next-line react-native/no-inline-styles
-          style={[styles.button, {opacity: disabled ? 0.7 : 1}]}
+          style={[styles.button, {opacity: disabled.current ? 0.7 : 1}]}
           onPress={onGetStarted}
-          disabled={disabled}
+          disabled={disabled.current}
         />
       </Animated.View>
     </ImageBackground>
