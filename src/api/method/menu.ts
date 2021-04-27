@@ -1,3 +1,5 @@
+import {ImagePickerResponse} from 'react-native-image-picker';
+
 import {makeRequest, Routes} from 'api/';
 import {IApiResponse, IMenu} from 'api/utils';
 
@@ -7,7 +9,13 @@ const apiGetMenu = () =>
     method: 'GET',
   });
 
-const apiAddFood = (data: any) =>
+const apiAddFood = (data: {
+  name: string;
+  selectedCategory: string;
+  price: string;
+  image: ImagePickerResponse;
+  description: string;
+}) =>
   makeRequest({
     url: Routes.AddFood,
     method: 'POST',
