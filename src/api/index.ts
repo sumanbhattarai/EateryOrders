@@ -29,7 +29,7 @@ axios.interceptors.request.use(async (request) => {
   return request;
 });
 
-async function makeRequest<R>(config: AxiosRequestConfig): Promise<R> {
+const makeRequest = async <R>(config: AxiosRequestConfig): Promise<R> => {
   try {
     const response = await client.request(config);
     return ({
@@ -43,6 +43,6 @@ async function makeRequest<R>(config: AxiosRequestConfig): Promise<R> {
       message: error.message,
     } as any) as R;
   }
-}
+};
 
 export {client, Routes, makeRequest};
