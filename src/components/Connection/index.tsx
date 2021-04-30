@@ -10,7 +10,7 @@ import useConnection from 'hooks/useConnection';
 const Connection = () => {
   const {status} = useConnection();
 
-  if (!status?.isInternetReachable) {
+  if (status?.isInternetReachable !== false) {
     return null;
   }
 
