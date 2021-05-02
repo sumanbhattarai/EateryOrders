@@ -5,14 +5,17 @@ import {
   TouchableOpacityProps,
   ViewStyle,
   TextStyle,
+  ActivityIndicator,
 } from 'react-native';
 
 import styles from './styles';
 import useConnection from 'hooks/useConnection';
+import Colors from 'utils/Colors';
 
 interface Props extends TouchableOpacityProps {
   title: string;
   needsInternet?: boolean;
+  loading?: boolean;
   style?: ViewStyle;
   textStyle?: TextStyle;
 }
@@ -20,6 +23,7 @@ interface Props extends TouchableOpacityProps {
 const Button = ({
   title,
   needsInternet = false,
+  loading = false,
   style,
   textStyle,
   ...rest
@@ -39,7 +43,11 @@ const Button = ({
       // eslint-disable-next-line react-native/no-inline-styles
       style={[styles.container, {opacity: pressable ? 1 : 0.7}, style]}
       {...rest}>
-      <Text style={[styles.title, textStyle]}>{title}</Text>
+      {loading ? (
+        <ActivityIndicator size="small" color={Colors.white} />
+      ) : (
+        <Text style={[styles.title, textStyle]}>{title}</Text>
+      )}
     </TouchableOpacity>
   );
 };
