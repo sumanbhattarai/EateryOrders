@@ -20,7 +20,7 @@ import {Width, wp} from 'utils/Constants';
 import useFadeInAnimation from 'animation/useFadeInAnimation';
 
 const OnBoardCard = ({data}: {data: OnBoardingDataType}) => {
-  const {image, text}: {image: ImageSourcePropType; text: string} = data;
+  const {image, text} = data;
   return (
     <View style={styles.onBoardCard}>
       <Image source={image} style={styles.image} />
