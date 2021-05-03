@@ -3,6 +3,7 @@ import {
   launchImageLibrary,
   ImagePickerResponse,
 } from 'react-native-image-picker';
+
 import {showError} from 'utils/Toast';
 
 const useImagePicker = () => {
@@ -15,6 +16,7 @@ const useImagePicker = () => {
       }
       if (response.errorMessage) {
         showError({message: response.errorMessage});
+        return;
       }
       setPickedImage(response);
     });
