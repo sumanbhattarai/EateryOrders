@@ -16,8 +16,8 @@ interface Props extends TouchableOpacityProps {
   title: string;
   needsInternet?: boolean;
   loading?: boolean;
-  style?: ViewStyle;
-  textStyle?: TextStyle;
+  style?: ViewStyle | ViewStyle[];
+  textStyle?: TextStyle | TextStyle[];
 }
 
 const Button = ({
