@@ -4,7 +4,6 @@ import {
   View,
   Text,
   Image,
-  ImageSourcePropType,
   NativeSyntheticEvent,
   NativeScrollEvent,
   Animated,
