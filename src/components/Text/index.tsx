@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React, {ReactNode, memo} from 'react';
 import {Text as RNText, TextProps, TextStyle} from 'react-native';
 
 import Fonts from 'utils/Fonts';
@@ -53,4 +53,4 @@ const Text = ({
   );
 };
 
-export default Text;
+export default memo(Text);

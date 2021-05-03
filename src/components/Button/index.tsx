@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {
   TouchableOpacity,
   Text,
@@ -52,4 +52,4 @@ const Button = ({
   );
 };
 
-export default Button;
+export default memo(Button);

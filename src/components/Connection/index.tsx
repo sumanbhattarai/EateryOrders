@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -24,4 +24,4 @@ const Connection = () => {
   );
 };
 
-export default Connection;
+export default memo(Connection);
