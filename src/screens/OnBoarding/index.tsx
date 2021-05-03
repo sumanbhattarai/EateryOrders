@@ -4,9 +4,7 @@ import {
   View,
   Text,
   Image,
-  NativeSyntheticEvent,
   NativeScrollEvent,
-  Animated,
   ImageBackground,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -16,7 +14,6 @@ import onBoardingData, {OnBoardingDataType} from './utils';
 import Button from 'components/Button';
 import Colors from 'utils/Colors';
 import {Width, wp} from 'utils/Constants';
-import useFadeInAnimation from 'animation/useFadeInAnimation';
 
 const OnBoardCard = ({data}: {data: OnBoardingDataType}) => {
   const {image, text} = data;
@@ -31,10 +28,8 @@ const OnBoardCard = ({data}: {data: OnBoardingDataType}) => {
 const OnBoarding = ({onGetStarted}: {onGetStarted: () => void}) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const disabled = useRef<boolean>(true);
-  const {opacity} = useFadeInAnimation({});
 
-  const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const {nativeEvent} = e;
+  const handleScroll = ({nativeEvent}: {nativeEvent: NativeScrollEvent}) => {
     const index: number = Math.round(nativeEvent.contentOffset.x / Width);
     if (activeIndex !== index) {
       // checking if the user has reached to the last slide.
@@ -74,7 +69,7 @@ const OnBoarding = ({onGetStarted}: {onGetStarted: () => void}) => {
           );
         })}
       </View>
-      <Animated.View style={[styles.footer, {opacity}]}>
+      <View style={styles.footer}>
         <Button
           title="Get started"
           // eslint-disable-next-line react-native/no-inline-styles
@@ -82,7 +77,7 @@ const OnBoarding = ({onGetStarted}: {onGetStarted: () => void}) => {
           onPress={onGetStarted}
           disabled={disabled.current}
         />
-      </Animated.View>
+      </View>
     </ImageBackground>
   );
 };
