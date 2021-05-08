@@ -48,4 +48,5 @@ const fetchCategory = () => async (
     dispatch(toggleLoading());
   }
 };
+
 export {fetchCategory};

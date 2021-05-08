@@ -56,4 +56,5 @@ const fetchMenu = () => async (
     dispatch(toggleLoading());
   }
 };
+
 export {fetchMenu};
