@@ -1,12 +1,8 @@
 import React, {useEffect, useCallback} from 'react';
-import {View, FlatList, Keyboard} from 'react-native';
-import {CompositeNavigationProp} from '@react-navigation/core';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import {View, FlatList, Keyboard, RefreshControl} from 'react-native';
 import ContentLoader from 'react-native-easy-content-loader';
 
 import styles from './styles';
-import {BottomTabParamList, RootStackParamList} from 'navigators/utils';
 import {useAppDispatch, useAppSelector} from 'services/TypedRedux';
 import {fetchCategory} from 'store/slices/category';
 import {fetchMenu} from 'store/slices/menu';
@@ -14,14 +10,9 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Tag from 'components/Tag';
 import {hp} from 'utils/Constants';
 
-interface Props {
-  navigation: CompositeNavigationProp<
-    StackNavigationProp<RootStackParamList>,
-    BottomTabNavigationProp<BottomTabParamList>
-  >;
-}
+interface Props {}
 
-const Menu = ({navigation}: Props) => {
+const Menu = ({}: Props) => {
   const {loading, entities, ids} = useAppSelector((state) => state.menu);
   const dispatch = useAppDispatch();
 
@@ -38,7 +29,7 @@ const Menu = ({navigation}: Props) => {
     <View style={styles.container}>
       <SafeAreaView>
         <ContentLoader
-          loading={loading}
+          loading={loading && ids.length < 1}
           listSize={6}
           pRows={2}
           pHeight={[hp(14), hp(6)]}
@@ -50,6 +41,12 @@ const Menu = ({navigation}: Props) => {
             keyExtractor={(item, index) => `${item}-${index}`}
             showsVerticalScrollIndicator={false}
             onScroll={Keyboard.dismiss}
+            refreshControl={
+              <RefreshControl
+                refreshing={loading && ids.length > 0}
+                onRefresh={() => dispatch(fetchCategory())}
+              />
+            }
             renderItem={({item: id}) => {
               const {category} = entities[id]!;
               return <Tag title={category} />;
