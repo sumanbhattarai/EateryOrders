@@ -4,18 +4,13 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit';
 import {Dispatch} from 'react';
-import uuid from 'react-native-uuid';
 
 import {apiGetMenu} from 'api/method/menu';
 import {IMenu} from 'api/utils';
 import {RootState} from 'store/';
 
-interface IMenuWithId extends IMenu {
-  id: string;
-}
-
-const menuAdapter = createEntityAdapter<IMenuWithId>({
-  selectId: (item) => item.id,
+const menuAdapter = createEntityAdapter<IMenu>({
+  selectId: (item) => item.category,
 });
 
 const initialState = menuAdapter.getInitialState({loading: false});
@@ -27,7 +22,7 @@ const menuSlice = createSlice({
     toggleLoading: (state) => {
       state.loading = !state.loading;
     },
-    fetchAll: (state, action: PayloadAction<IMenuWithId[]>) => {
+    fetchAll: (state, action: PayloadAction<IMenu[]>) => {
       menuAdapter.addMany(state, action.payload);
       state.loading = false;
     },
@@ -48,10 +43,7 @@ const fetchMenu = () => async (
   dispatch(toggleLoading());
   const response = await apiGetMenu();
   if (response.success) {
-    const dataWithId = response.data?.map((el) => {
-      return {id: uuid.v4().toString(), ...el};
-    });
-    dispatch(fetchAll(dataWithId!));
+    dispatch(fetchAll(response.data!));
   } else {
     dispatch(toggleLoading());
   }
