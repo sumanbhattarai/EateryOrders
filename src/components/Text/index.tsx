@@ -5,7 +5,7 @@ import Fonts from 'utils/Fonts';
 import {wp} from 'utils/Constants';
 import Colors from 'utils/Colors';
 
-type TextType = 'regular' | 'heading' | 'tiny';
+type TextType = 'regular' | 'heading' | 'sub-heading' | 'tiny';
 
 interface Props extends TextProps {
   type?: TextType;
@@ -16,15 +16,20 @@ interface Props extends TextProps {
 
 const getStyling = (type: TextType): TextStyle => {
   switch (type) {
-    case 'regular':
-      return {
-        fontSize: wp(4.4),
-        fontFamily: Fonts.regular,
-      };
     case 'heading':
       return {
         fontSize: wp(6.4),
         fontFamily: Fonts.bold,
+      };
+    case 'sub-heading':
+      return {
+        fontSize: wp(5.4),
+        fontFamily: Fonts.bold,
+      };
+    case 'regular':
+      return {
+        fontSize: wp(4.4),
+        fontFamily: Fonts.regular,
       };
     case 'tiny':
       return {
