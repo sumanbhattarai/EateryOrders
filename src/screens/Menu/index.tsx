@@ -1,14 +1,16 @@
 import React, {useEffect, useCallback} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, FlatList, Keyboard} from 'react-native';
 import {CompositeNavigationProp} from '@react-navigation/core';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 
-import Button from 'components/Button';
+import styles from './styles';
 import {BottomTabParamList, RootStackParamList} from 'navigators/utils';
-import {useAppDispatch} from 'services/TypedRedux';
+import {useAppDispatch, useAppSelector} from 'services/TypedRedux';
 import {fetchCategory} from 'store/slices/category';
 import {fetchMenu} from 'store/slices/menu';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import Tag from 'components/Tag';
 
 interface Props {
   navigation: CompositeNavigationProp<
@@ -18,6 +20,7 @@ interface Props {
 }
 
 const Menu = ({navigation}: Props) => {
+  const {entities, ids} = useAppSelector((state) => state.menu);
   const dispatch = useAppDispatch();
 
   const loadAppDataAsync = useCallback(() => {
@@ -31,22 +34,20 @@ const Menu = ({navigation}: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text>Menu Screen</Text>
-      <Button title="Add Food" onPress={() => navigation.navigate('AddFood')} />
-      <Button
-        title="Food Detail"
-        onPress={() => navigation.navigate('FoodDetal')}
-      />
+      <SafeAreaView>
+        <FlatList
+          data={ids}
+          keyExtractor={(item, index) => `${item}-${index}`}
+          showsVerticalScrollIndicator={false}
+          onScroll={Keyboard.dismiss}
+          renderItem={({item: id}) => {
+            const {category} = entities[id]!;
+            return <Tag title={category} />;
+          }}
+        />
+      </SafeAreaView>
     </View>
   );
 };
 
 export default Menu;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
