@@ -9,6 +9,7 @@ import {fetchMenu} from 'store/slices/menu';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Tag from 'components/Tag';
 import {hp} from 'utils/Constants';
+import Greeting from './components/Greeting';
 
 interface Props {}
 
@@ -28,6 +29,7 @@ const Menu = ({}: Props) => {
   return (
     <View style={styles.container}>
       <SafeAreaView>
+        <Greeting />
         <ContentLoader
           loading={loading && ids.length < 1}
           listSize={6}
@@ -44,7 +46,7 @@ const Menu = ({}: Props) => {
             refreshControl={
               <RefreshControl
                 refreshing={loading && ids.length > 0}
-                onRefresh={() => dispatch(fetchCategory())}
+                onRefresh={() => dispatch(fetchMenu())}
               />
             }
             renderItem={({item: id}) => {
