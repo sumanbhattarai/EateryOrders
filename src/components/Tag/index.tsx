@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ViewStyle} from 'react-native';
 
 import Text from 'components/Text';
 import Colors from 'utils/Colors';
@@ -17,9 +17,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const Tag = ({title}: {title: string}) => {
+interface Props {
+  title: string;
+  style: ViewStyle;
+}
+
+const Tag = ({title, style}: Props) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <Text type="sub-heading" color={Colors.white}>
         {title}
       </Text>
