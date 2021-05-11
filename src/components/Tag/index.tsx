@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 
 interface Props {
   title: string;
-  style: ViewStyle;
+  style?: ViewStyle;
 }
 
 const Tag = ({title, style}: Props) => {
