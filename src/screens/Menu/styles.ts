@@ -9,6 +9,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(2),
     backgroundColor: Colors.white,
   },
+  fullFlex: {
+    flex: 1,
+  },
 });
 
 export default styles;
