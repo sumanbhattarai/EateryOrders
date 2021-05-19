@@ -34,7 +34,6 @@ const fetchCategory = createAsyncThunk(
       if (status === RequestStatus.Pending) {
         return false;
       }
-      return true;
     },
   },
 );

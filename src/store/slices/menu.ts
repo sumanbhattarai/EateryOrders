@@ -34,7 +34,6 @@ const fetchMenu = createAsyncThunk(
       if (status === RequestStatus.Pending) {
         return false;
       }
-      return true;
     },
   },
 );
