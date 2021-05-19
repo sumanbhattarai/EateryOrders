@@ -10,11 +10,13 @@ import {fetchMenu} from 'store/slices/menu';
 import Tag from 'components/Tag';
 import {hp} from 'utils/Constants';
 import Greeting from './components/Greeting';
+import {RequestStatus} from 'store/utils';
 
 interface Props {}
 
 const Menu = ({}: Props) => {
-  const {loading, entities, ids} = useAppSelector((state) => state.menu);
+  const {status, entities, ids} = useAppSelector((state) => state.menu);
+  const isLoading = status === RequestStatus.Pending;
   const dispatch = useAppDispatch();
 
   const loadAppDataAsync = useCallback(() => {
@@ -31,7 +33,7 @@ const Menu = ({}: Props) => {
       <SafeAreaView style={styles.fullFlex}>
         <Greeting />
         <ContentLoader
-          loading={loading && ids.length < 1}
+          loading={isLoading && ids.length < 1}
           listSize={6}
           pRows={2}
           pHeight={[hp(14), hp(6)]}
@@ -45,7 +47,7 @@ const Menu = ({}: Props) => {
             onScroll={Keyboard.dismiss}
             refreshControl={
               <RefreshControl
-                refreshing={loading && ids.length > 0}
+                refreshing={isLoading && ids.length > 0}
                 onRefresh={() => dispatch(fetchMenu())}
               />
             }
