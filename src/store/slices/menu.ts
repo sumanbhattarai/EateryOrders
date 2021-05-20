@@ -6,16 +6,25 @@ import {
 } from '@reduxjs/toolkit';
 
 import {apiGetMenu} from 'api/method/menu';
-import {IMenu} from 'api/utils';
-import {RequestStatus} from 'store/utils';
+import {IFoodItem} from 'api/utils';
+import {
+  getFoodItemArray,
+  getIdMappedMenus,
+  IMappedMenus,
+  RequestStatus,
+} from 'store/utils';
 import {RootState} from 'store/';
 
-const menuAdapter = createEntityAdapter<IMenu>({
-  selectId: (item) => item.category,
+const menuAdapter = createEntityAdapter<IFoodItem>({
+  selectId: (item) => item._id,
 });
 
-const initialState = menuAdapter.getInitialState<{status: RequestStatus}>({
+const initialState = menuAdapter.getInitialState<{
+  status: RequestStatus;
+  menus: Array<IMappedMenus>;
+}>({
   status: RequestStatus.Idle,
+  menus: [],
 });
 
 const fetchMenu = createAsyncThunk(
@@ -23,9 +32,14 @@ const fetchMenu = createAsyncThunk(
   async () => {
     const response = await apiGetMenu();
     if (!response.success) {
-      throw Error();
+      throw new Error(response.message);
     }
-    return response.data as Array<IMenu>;
+    const foodItems = getFoodItemArray(response.data!);
+    const menus = getIdMappedMenus(response.data!);
+    return {foodItems, menus} as {
+      foodItems: Array<IFoodItem>;
+      menus: Array<IMappedMenus>;
+    };
   },
   {
     condition: (_, {getState}) => {
@@ -48,8 +62,17 @@ const menuSlice = createSlice({
     });
     builder.addCase(
       fetchMenu.fulfilled,
-      (state, {payload: data}: PayloadAction<Array<IMenu>>) => {
-        menuAdapter.upsertMany(state, data);
+      (
+        state,
+        {
+          payload: {foodItems, menus},
+        }: PayloadAction<{
+          foodItems: Array<IFoodItem>;
+          menus: Array<IMappedMenus>;
+        }>,
+      ) => {
+        menuAdapter.upsertMany(state, foodItems);
+        state.menus = menus;
         state.status = RequestStatus.Fulfilled;
       },
     );

@@ -15,7 +15,7 @@ import {RequestStatus} from 'store/utils';
 interface Props {}
 
 const Menu = ({}: Props) => {
-  const {status, entities, ids} = useAppSelector((state) => state.menu);
+  const {status, ids, menus} = useAppSelector((state) => state.menu);
   const isLoading = status === RequestStatus.Pending;
   const dispatch = useAppDispatch();
 
@@ -41,7 +41,7 @@ const Menu = ({}: Props) => {
           tWidth={'100%'}
           animationDuration={1000}>
           <FlatList
-            data={ids}
+            data={menus}
             keyExtractor={(item, index) => `${item}-${index}`}
             showsVerticalScrollIndicator={false}
             onScroll={Keyboard.dismiss}
@@ -51,8 +51,8 @@ const Menu = ({}: Props) => {
                 onRefresh={() => dispatch(fetchMenu())}
               />
             }
-            renderItem={({item: id}) => {
-              const {category} = entities[id]!;
+            renderItem={({item}) => {
+              const {category} = item;
               return <Tag title={category} />;
             }}
           />
