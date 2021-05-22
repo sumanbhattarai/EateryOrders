@@ -21,10 +21,10 @@ const menuAdapter = createEntityAdapter<IFoodItem>({
 
 const initialState = menuAdapter.getInitialState<{
   status: RequestStatus;
-  menus: Array<IMappedMenus>;
+  menus: IMappedMenus;
 }>({
   status: RequestStatus.Idle,
-  menus: [],
+  menus: {},
 });
 
 const fetchMenu = createAsyncThunk(
@@ -38,7 +38,7 @@ const fetchMenu = createAsyncThunk(
     const menus = getIdMappedMenus(response.data!);
     return {foodItems, menus} as {
       foodItems: Array<IFoodItem>;
-      menus: Array<IMappedMenus>;
+      menus: IMappedMenus;
     };
   },
   {
@@ -68,7 +68,7 @@ const menuSlice = createSlice({
           payload: {foodItems, menus},
         }: PayloadAction<{
           foodItems: Array<IFoodItem>;
-          menus: Array<IMappedMenus>;
+          menus: IMappedMenus;
         }>,
       ) => {
         menuAdapter.upsertMany(state, foodItems);
