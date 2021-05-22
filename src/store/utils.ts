@@ -9,8 +9,7 @@ export enum RequestStatus {
 }
 
 export interface IMappedMenus {
-  category: string;
-  items: Array<string>;
+  [category: string]: Array<string>;
 }
 
 export const getFoodItemArray = (data: Array<IMenu>) => {
@@ -23,8 +22,11 @@ export const getFoodItemArray = (data: Array<IMenu>) => {
   return foodItems;
 };
 
-export const getIdMappedMenus = (data: Array<IMenu>) =>
+export const getIdMappedMenus = (data: Array<IMenu>) => {
+  let obj: IMappedMenus = {};
   data.map((el) => {
     const ids = el.item.map((item) => item._id);
-    return ({...el, item: ids} as any) as IMappedMenus;
+    obj[el.category] = ids;
   });
+  return obj;
+};
