@@ -41,7 +41,7 @@ const Menu = ({}: Props) => {
           tWidth={'100%'}
           animationDuration={1000}>
           <FlatList
-            data={menus}
+            data={Object.keys(menus)}
             keyExtractor={(item, index) => `${item}-${index}`}
             showsVerticalScrollIndicator={false}
             onScroll={Keyboard.dismiss}
@@ -52,8 +52,7 @@ const Menu = ({}: Props) => {
               />
             }
             renderItem={({item}) => {
-              const {category} = item;
-              return <Tag title={category} />;
+              return <Tag title={item} />;
             }}
           />
         </ContentLoader>
