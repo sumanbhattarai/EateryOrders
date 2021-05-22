@@ -31,9 +31,7 @@ const fetchCategory = createAsyncThunk(
     condition: (_, {getState}) => {
       const rootState = getState() as RootState;
       const {status} = rootState.category;
-      if (status === RequestStatus.Pending) {
-        return false;
-      }
+      return status !== RequestStatus.Pending;
     },
   },
 );

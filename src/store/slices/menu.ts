@@ -45,9 +45,7 @@ const fetchMenu = createAsyncThunk(
     condition: (_, {getState}) => {
       const rootState = getState() as RootState;
       const {status} = rootState.menu;
-      if (status === RequestStatus.Pending) {
-        return false;
-      }
+      return status !== RequestStatus.Pending;
     },
   },
 );
