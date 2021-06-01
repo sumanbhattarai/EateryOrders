@@ -5,15 +5,15 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit';
 
-import {apiGetCategory} from 'api/method/category';
+import {apiAddCategory, apiGetCategory} from 'api/method/category';
 import {ICategory} from 'api/utils';
+import {makeFirstCharCapital} from 'services/StringService';
 import {RootState} from 'store/index';
 import {RequestStatus} from 'store/utils';
+import {showError} from 'utils/Toast';
 
 const categoryAdaptor = createEntityAdapter<ICategory>({
   selectId: (item) => item._id,
-  sortComparer: (a, b) =>
-    a.name.toUpperCase().localeCompare(b.name.toUpperCase()),
 });
 
 const initialState = categoryAdaptor.getInitialState<{status: RequestStatus}>({
@@ -38,6 +38,31 @@ const fetchCategory = createAsyncThunk(
   },
 );
 
+const addCategory = createAsyncThunk(
+  'category/add',
+  async (name: string) => {
+    const response = await apiAddCategory(makeFirstCharCapital(name));
+    if (!response.success) {
+      throw Error();
+    }
+    return response.data as ICategory;
+  },
+  {
+    condition: (name, {getState}) => {
+      const rootState = getState() as RootState;
+      const {status, entities} = rootState.category;
+      let isPresent: boolean = false;
+      for (const id in entities) {
+        if (entities[id]?.name === name) {
+          isPresent = true;
+          showError({message: `Category "${name}" already exists.`});
+        }
+      }
+      return status !== RequestStatus.Pending && !isPresent;
+    },
+  },
+);
+
 const categorySlice = createSlice({
   name: 'category',
   initialState,
@@ -56,8 +81,21 @@ const categorySlice = createSlice({
     builder.addCase(fetchCategory.rejected, (state) => {
       state.status = RequestStatus.Rejected;
     });
+    builder.addCase(addCategory.pending, (state) => {
+      state.status = RequestStatus.Pending;
+    });
+    builder.addCase(
+      addCategory.fulfilled,
+      (state, {payload: data}: PayloadAction<ICategory>) => {
+        categoryAdaptor.upsertOne(state, data);
+        state.status = RequestStatus.Fulfilled;
+      },
+    );
+    builder.addCase(addCategory.rejected, (state) => {
+      state.status = RequestStatus.Rejected;
+    });
   },
 });
 
 export default categorySlice.reducer;
-export {fetchCategory};
+export {fetchCategory, addCategory};
