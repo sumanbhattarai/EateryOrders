@@ -12,6 +12,8 @@ import {RequestStatus} from 'store/utils';
 
 const categoryAdaptor = createEntityAdapter<ICategory>({
   selectId: (item) => item._id,
+  sortComparer: (a, b) =>
+    a.name.toUpperCase().localeCompare(b.name.toUpperCase()),
 });
 
 const initialState = categoryAdaptor.getInitialState<{status: RequestStatus}>({

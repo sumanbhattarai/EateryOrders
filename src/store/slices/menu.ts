@@ -17,6 +17,8 @@ import {RootState} from 'store/';
 
 const menuAdapter = createEntityAdapter<IFoodItem>({
   selectId: (item) => item._id,
+  sortComparer: (a, b) =>
+    a.name.toUpperCase().localeCompare(b.name.toUpperCase()),
 });
 
 const initialState = menuAdapter.getInitialState<{
