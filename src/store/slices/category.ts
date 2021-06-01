@@ -53,7 +53,7 @@ const addCategory = createAsyncThunk(
       const {status, entities} = rootState.category;
       let isPresent: boolean = false;
       for (const id in entities) {
-        if (entities[id]?.name === name) {
+        if (entities[id]?.name.toUpperCase() === name.toUpperCase()) {
           isPresent = true;
           showError({message: `Category "${name}" already exists.`});
         }
