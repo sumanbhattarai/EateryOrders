@@ -12,32 +12,37 @@ const customStyling: Partial<MessageOptions> = {
   },
 };
 
-const showSuccess = (options: MessageOptions) =>
-  showMessage({
-    ...options,
-    ...customStyling,
-    type: 'success',
-  });
+type toastType = 'success' | 'danger' | 'warning' | 'info';
 
-const showError = (options: MessageOptions) =>
-  showMessage({
-    ...options,
-    ...customStyling,
-    type: 'danger',
-  });
+const getConfig = (
+  param: Partial<MessageOptions> | string,
+  type: toastType,
+) => {
+  let config: Partial<MessageOptions> = {...customStyling, type};
+  if (typeof param === 'string') {
+    return {...config, message: param} as MessageOptions;
+  }
+  return {...config, ...param} as MessageOptions;
+};
 
-const showWarning = (options: MessageOptions) =>
-  showMessage({
-    ...options,
-    ...customStyling,
-    type: 'warning',
-  });
+const showSuccess = (param: Partial<MessageOptions> | string) => {
+  const config = getConfig(param, 'success');
+  showMessage(config);
+};
 
-const showInfo = (options: MessageOptions) =>
-  showMessage({
-    ...options,
-    ...customStyling,
-    type: 'info',
-  });
+const showError = (param: Partial<MessageOptions> | string) => {
+  const config = getConfig(param, 'danger');
+  showMessage(config);
+};
+
+const showWarning = (param: Partial<MessageOptions> | string) => {
+  const config = getConfig(param, 'warning');
+  showMessage(config);
+};
+
+const showInfo = (param: Partial<MessageOptions> | string) => {
+  const config = getConfig(param, 'info');
+  showMessage(config);
+};
 
 export {showError, showSuccess, showInfo, showWarning};
