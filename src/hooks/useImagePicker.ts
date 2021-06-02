@@ -15,7 +15,7 @@ const useImagePicker = () => {
         return;
       }
       if (response.errorMessage) {
-        showError({message: response.errorMessage});
+        showError(response.errorMessage);
         return;
       }
       setPickedImage(response);

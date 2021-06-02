@@ -55,7 +55,7 @@ const addCategory = createAsyncThunk(
       for (const id in entities) {
         if (entities[id]?.name.toUpperCase() === name.toUpperCase()) {
           isPresent = true;
-          showError({message: `Category "${name}" already exists.`});
+          showError(`Category "${name}" already exists.`);
         }
       }
       return status !== RequestStatus.Pending && !isPresent;
