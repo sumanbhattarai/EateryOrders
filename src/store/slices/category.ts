@@ -7,7 +7,7 @@ import {
 
 import {apiAddCategory, apiGetCategory} from 'api/method/category';
 import {ICategory} from 'api/utils';
-import {makeFirstCharCapital} from 'services/StringService';
+import {properStringValue} from 'services/StringService';
 import {RootState} from 'store/index';
 import {RequestStatus} from 'store/utils';
 import {showError} from 'utils/Toast';
@@ -41,7 +41,7 @@ const fetchCategory = createAsyncThunk(
 const addCategory = createAsyncThunk(
   'category/add',
   async (name: string) => {
-    const response = await apiAddCategory(makeFirstCharCapital(name));
+    const response = await apiAddCategory(properStringValue(name));
     if (!response.success) {
       throw Error();
     }
