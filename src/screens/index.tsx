@@ -19,7 +19,7 @@ const useAppLoad = () => {
   }, []);
 
   const updateHideOnBoarding = useCallback(() => {
-    // updating the async storage than after our local state.
+    // updating the async storage then after our local state.
     setHasAppBeenOpenedPreviously(true).then(() => setHideOnBoarding(true));
   }, []);
 
