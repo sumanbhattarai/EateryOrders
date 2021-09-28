@@ -18,27 +18,27 @@ const getStyling = (type: TextType): TextStyle => {
   switch (type) {
     case 'heading':
       return {
-        fontSize: wp(6.4),
+        fontSize: wp(4.4),
         fontFamily: Fonts.bold,
       };
     case 'sub-heading':
       return {
-        fontSize: wp(5.4),
+        fontSize: wp(3.8),
         fontFamily: Fonts.bold,
       };
     case 'regular':
       return {
-        fontSize: wp(4.4),
+        fontSize: wp(3.2),
         fontFamily: Fonts.regular,
       };
     case 'tiny':
       return {
-        fontSize: wp(3.4),
+        fontSize: wp(2.8),
         fontFamily: Fonts.light,
       };
     default:
       return {
-        fontSize: wp(4.4),
+        fontSize: wp(3.2),
         fontFamily: Fonts.regular,
       };
   }
