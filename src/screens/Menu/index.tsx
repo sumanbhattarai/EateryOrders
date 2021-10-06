@@ -55,7 +55,7 @@ const Menu = ({}: Props) => {
             renderItem={({item}) => {
               const idsArray = menus[item];
               return (
-                <>
+                <View style={styles.cardContainer}>
                   <Tag title={item} />
                   <FlatList
                     data={idsArray}
@@ -64,7 +64,7 @@ const Menu = ({}: Props) => {
                     showsHorizontalScrollIndicator={false}
                     renderItem={({item: id}) => <FoodCard id={id} />}
                   />
-                </>
+                </View>
               );
             }}
           />

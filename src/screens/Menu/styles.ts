@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-import {wp} from 'utils/Constants';
+import {hp, wp} from 'utils/Constants';
 import Colors from 'utils/Colors';
 
 const styles = StyleSheet.create({
@@ -11,6 +11,9 @@ const styles = StyleSheet.create({
   },
   fullFlex: {
     flex: 1,
+  },
+  cardContainer: {
+    marginTop: hp(2),
   },
 });
 

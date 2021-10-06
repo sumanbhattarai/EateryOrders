@@ -1,7 +1,14 @@
 import React from 'react';
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
 import Text from 'components/Text';
+import {hp} from 'utils/Constants';
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: hp(2),
+  },
+});
 
 const getGreeting = (): string => {
   const today = new Date();
@@ -18,7 +25,7 @@ const getGreeting = (): string => {
 const Greeting = () => {
   const greeting: string = getGreeting();
   return (
-    <View>
+    <View style={styles.container}>
       <Text type="heading">{greeting}, Admin!</Text>
     </View>
   );
