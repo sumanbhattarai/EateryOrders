@@ -11,6 +11,7 @@ import Tag from 'components/Tag';
 import {hp} from 'utils/Constants';
 import Greeting from './components/Greeting';
 import {RequestStatus} from 'store/utils';
+import FoodCard from 'components/FoodCard';
 
 interface Props {}
 
@@ -52,7 +53,19 @@ const Menu = ({}: Props) => {
               />
             }
             renderItem={({item}) => {
-              return <Tag title={item} />;
+              const idsArray = menus[item];
+              return (
+                <>
+                  <Tag title={item} />
+                  <FlatList
+                    data={idsArray}
+                    keyExtractor={(_, index) => index.toString()}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={({item: id}) => <FoodCard id={id} />}
+                  />
+                </>
+              );
             }}
           />
         </ContentLoader>
