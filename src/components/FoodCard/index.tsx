@@ -21,7 +21,7 @@ const FoodCard = ({id}: Props) => {
   const navigation = useNavigation<navigationType>();
 
   const handleNavigation = () => {
-    navigation.navigate('FoodDetail');
+    navigation.navigate('FoodDetail', {id: id, name});
   };
 
   return (
