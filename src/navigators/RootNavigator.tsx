@@ -97,7 +97,7 @@ const RootNavigator = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen name="AddFood" component={AddFood} />
-        <Stack.Screen name="FoodDetal" component={Detail} />
+        <Stack.Screen name="FoodDetail" component={Detail} />
       </Stack.Navigator>
     </NavigationContainer>
   );
