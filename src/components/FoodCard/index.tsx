@@ -1,21 +1,31 @@
 import React from 'react';
 import {View, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 import styles from './styles';
 import Text from 'components/Text';
 import {useAppSelector} from 'services/TypedRedux';
+import {RootStackParamList} from 'navigators/utils';
 
 interface Props {
   id: string;
 }
 
+type navigationType = StackNavigationProp<RootStackParamList>;
+
 const FoodCard = ({id}: Props) => {
   const {entities} = useAppSelector((state) => state.menu);
   const {name, category, price} = entities[id]!;
+  const navigation = useNavigation<navigationType>();
+
+  const handleNavigation = () => {
+    navigation.navigate('FoodDetal');
+  };
 
   return (
-    <TouchableOpacity activeOpacity={0.7} onPress={() => {}}>
+    <TouchableOpacity activeOpacity={0.7} onPress={handleNavigation}>
       <View style={styles.container}>
         <View>
           <Image
