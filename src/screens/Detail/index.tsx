@@ -7,6 +7,7 @@ import {useAppSelector} from 'services/TypedRedux';
 import {RootStackParamList} from 'navigators/utils';
 import Text from 'components/Text';
 import Colors from 'utils/Colors';
+import Button from 'components/Button';
 
 interface Props {
   route: RouteProp<RootStackParamList, 'FoodDetail'>;
@@ -66,6 +67,10 @@ const Detail = ({route}: Props) => {
             distinctio ab itaque! Rerum debitis sapiente, porro soluta alias
             quis odio incidunt iusto nesciunt obcaecati.
           </Text>
+        </View>
+        <View style={styles.horizontalFlex}>
+          <Button title="Edit" style={styles.button} />
+          <Button title="Delete" style={styles.button} />
         </View>
       </View>
     </ScrollView>

@@ -9,6 +9,7 @@ interface Style {
   heading: TextStyle;
   horizontalFlex: ViewStyle;
   detail: ViewStyle;
+  button: ViewStyle;
 }
 
 const styles = StyleSheet.create<Style>({
@@ -30,6 +31,10 @@ const styles = StyleSheet.create<Style>({
     justifyContent: 'space-between',
   },
   detail: {
+    marginTop: hp(2),
+  },
+  button: {
+    width: wp(40),
     marginTop: hp(2),
   },
 });
