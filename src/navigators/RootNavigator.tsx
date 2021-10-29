@@ -100,7 +100,9 @@ const RootNavigator = () => {
         <Stack.Screen
           name="FoodDetail"
           component={Detail}
-          options={({route}) => ({title: route.params.name})}
+          options={{
+            title: '',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
