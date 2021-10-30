@@ -121,9 +121,9 @@ const RootNavigator = () => {
         <Stack.Screen
           name="FoodDetail"
           component={Detail}
-          options={{
-            title: '',
-          }}
+          options={({route}) => ({
+            title: route.params.name,
+          })}
         />
         <Stack.Screen name="Settings" component={Settings} />
       </Stack.Navigator>
