@@ -102,8 +102,20 @@ const RootNavigator = () => {
           component={BottomNavigation}
           options={{headerShown: false}}
         />
-        <Stack.Screen name="AddFood" component={AddFood} />
-        <Stack.Screen name="AddCategory" component={AddCategory} />
+        <Stack.Screen
+          name="AddFood"
+          component={AddFood}
+          options={{
+            title: 'Add a food item',
+          }}
+        />
+        <Stack.Screen
+          name="AddCategory"
+          component={AddCategory}
+          options={{
+            title: 'Add a category',
+          }}
+        />
         <Stack.Screen
           name="FoodDetail"
           component={Detail}
