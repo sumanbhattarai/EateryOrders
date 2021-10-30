@@ -18,6 +18,7 @@ import Color from 'utils/Colors';
 import {BottomTabParamList, RootStackParamList, TopTabParamList} from './utils';
 import Settings from 'screens/Settings';
 import Fonts from 'utils/Fonts';
+import {wp} from 'utils/Constants';
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -95,6 +96,7 @@ const RootNavigator = () => {
           ...TransitionPresets.SlideFromRightIOS,
           headerTitleStyle: {
             fontFamily: Fonts.regular,
+            fontSize: wp(3.8),
           },
         }}>
         <Stack.Screen
