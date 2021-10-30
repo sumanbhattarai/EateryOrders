@@ -18,8 +18,7 @@ const styles = StyleSheet.create<Style>({
     padding: 8,
     height: 260,
     width: 300,
-    borderWidth: 1,
-    borderColor: Colors.lightGrey,
+    backgroundColor: Colors.white,
   },
   image: {
     height: 180,
