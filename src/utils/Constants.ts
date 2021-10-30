@@ -9,5 +9,6 @@ export const Width: number = Dimensions.get('screen').width;
 export const Height: number = Dimensions.get('screen').height;
 export const isAndroid: boolean = Platform.OS === 'android';
 export const statusBarHeight: number = getStatusBarHeight();
+export const brandName: string = 'Eatery Orders';
 
 export {wp, hp};
