@@ -18,7 +18,7 @@ const Detail = ({route}: Props) => {
   const id = route.params.id;
   const {name, category, price} = entities[id]!;
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Image source={require('assets/images/pizza.png')} style={styles.image} />
       <View style={styles.informationBox}>
         <Text type="heading" style={styles.heading}>
