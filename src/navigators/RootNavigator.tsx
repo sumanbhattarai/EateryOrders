@@ -6,6 +6,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Entypo';
 
 import AddFood from 'screens/AddFood';
+import AddCategory from 'screens/AddCategory';
 import Detail from 'screens/Detail';
 import Menu from 'screens/Menu';
 import Recieved from 'screens/Recieved';
@@ -15,6 +16,7 @@ import Account from 'screens/Account';
 import Font from 'utils/Fonts';
 import Color from 'utils/Colors';
 import {BottomTabParamList, RootStackParamList, TopTabParamList} from './utils';
+import Settings from 'screens/Settings';
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -97,6 +99,7 @@ const RootNavigator = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen name="AddFood" component={AddFood} />
+        <Stack.Screen name="AddCategory" component={AddCategory} />
         <Stack.Screen
           name="FoodDetail"
           component={Detail}
@@ -104,6 +107,7 @@ const RootNavigator = () => {
             title: '',
           }}
         />
+        <Stack.Screen name="Settings" component={Settings} />
       </Stack.Navigator>
     </NavigationContainer>
   );
