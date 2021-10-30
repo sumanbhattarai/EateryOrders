@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {View, FlatList, TouchableOpacity} from 'react-native';
+import {View, FlatList, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -54,7 +54,7 @@ const Account = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageView} />
+      <Image source={require('assets/images/logo.png')} style={styles.image} />
       <Text style={styles.title} type="sub-heading">
         {brandName}
       </Text>
