@@ -17,6 +17,7 @@ import Font from 'utils/Fonts';
 import Color from 'utils/Colors';
 import {BottomTabParamList, RootStackParamList, TopTabParamList} from './utils';
 import Settings from 'screens/Settings';
+import Fonts from 'utils/Fonts';
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -92,6 +93,9 @@ const RootNavigator = () => {
         screenOptions={{
           gestureEnabled: true,
           ...TransitionPresets.SlideFromRightIOS,
+          headerTitleStyle: {
+            fontFamily: Fonts.regular,
+          },
         }}>
         <Stack.Screen
           name="Home"
