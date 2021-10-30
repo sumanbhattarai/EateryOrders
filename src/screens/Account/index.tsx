@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {View, FlatList, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 import styles from './styles';
 import Text from 'components/Text';
 import {brandName, wp} from 'utils/Constants';
+import {RootStackParamList} from 'navigators/utils';
 
 type button = {
   name: string;
@@ -12,24 +15,31 @@ type button = {
 };
 
 const Account = () => {
-  const buttons: Array<button> = [
-    {
-      name: 'Add a category',
-      action: () => {},
-    },
-    {
-      name: 'Add a food item',
-      action: () => {},
-    },
-    {
-      name: 'Settings',
-      action: () => {},
-    },
-    {
-      name: 'Logout',
-      action: () => {},
-    },
-  ];
+  const navigation = useNavigation<
+    StackNavigationProp<RootStackParamList, 'Settings'>
+  >();
+
+  const buttons: Array<button> = useMemo(
+    () => [
+      {
+        name: 'Add a category',
+        action: () => navigation.navigate('AddCategory'),
+      },
+      {
+        name: 'Add a food item',
+        action: () => navigation.navigate('AddFood'),
+      },
+      {
+        name: 'Settings',
+        action: () => navigation.navigate('Settings'),
+      },
+      {
+        name: 'Logout',
+        action: () => {},
+      },
+    ],
+    [navigation],
+  );
 
   const renderButtons = ({item}: {item: button}) => {
     return (
