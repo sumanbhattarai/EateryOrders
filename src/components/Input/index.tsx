@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     width: wp(96),
     borderWidth: 1,
     paddingLeft: 8,
-    marginVertical: 8,
+    marginVertical: wp(2),
     fontFamily: Fonts.regular,
     height: hp(6),
     fontSize: wp(3.2),
