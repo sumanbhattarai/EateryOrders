@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect} from 'react';
+import React, {useState, useLayoutEffect, useCallback, useMemo} from 'react';
 import {
   Image,
   NativeSyntheticEvent,
@@ -29,6 +29,15 @@ const AddFood = () => {
     StackNavigationProp<RootStackParamList, 'AddFood'>
   >();
 
+  const categories = useMemo(
+    () =>
+      ids.map((el) => ({
+        label: entities[el]?.name,
+        value: entities[el]?.name,
+      })),
+    [entities, ids],
+  );
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -39,15 +48,16 @@ const AddFood = () => {
     });
   }, [navigation]);
 
-  const handleContentSizeChange = (
-    e: NativeSyntheticEvent<TextInputContentSizeChangeEventData>,
-  ) => {
-    if (e.nativeEvent.contentSize.height < hp(6)) {
-      setHeightOfDesciption(hp(6));
-      return;
-    }
-    setHeightOfDesciption(e.nativeEvent.contentSize.height);
-  };
+  const handleContentSizeChange = useCallback(
+    (e: NativeSyntheticEvent<TextInputContentSizeChangeEventData>) => {
+      if (e.nativeEvent.contentSize.height < hp(6)) {
+        setHeightOfDesciption(hp(6));
+        return;
+      }
+      setHeightOfDesciption(e.nativeEvent.contentSize.height);
+    },
+    [],
+  );
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -71,10 +81,7 @@ const AddFood = () => {
       />
       <Text style={styles.label}>Category</Text>
       <DropDownPicker
-        items={ids.map((el) => ({
-          label: entities[el]?.name,
-          value: entities[el]?.name,
-        }))}
+        items={categories}
         defaultValue={null}
         containerStyle={styles.dropdownContainer}
         style={styles.dropdown}
