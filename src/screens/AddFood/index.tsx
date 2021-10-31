@@ -1,5 +1,10 @@
 import React, {useState, useLayoutEffect} from 'react';
-import {Image, ScrollView} from 'react-native';
+import {
+  Image,
+  NativeSyntheticEvent,
+  ScrollView,
+  TextInputContentSizeChangeEventData,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/core';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -34,6 +39,16 @@ const AddFood = () => {
     });
   }, [navigation]);
 
+  const handleContentSizeChange = (
+    e: NativeSyntheticEvent<TextInputContentSizeChangeEventData>,
+  ) => {
+    if (e.nativeEvent.contentSize.height < hp(6)) {
+      setHeightOfDesciption(hp(6));
+      return;
+    }
+    setHeightOfDesciption(e.nativeEvent.contentSize.height);
+  };
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Text style={styles.heading}>
@@ -51,13 +66,7 @@ const AddFood = () => {
       <Input
         placeholder="Write about the food."
         multiline
-        onContentSizeChange={(e) => {
-          if (e.nativeEvent.contentSize.height < hp(6)) {
-            setHeightOfDesciption(hp(6));
-            return;
-          }
-          setHeightOfDesciption(e.nativeEvent.contentSize.height);
-        }}
+        onContentSizeChange={handleContentSizeChange}
         style={{height: heightOfDescription}}
       />
       <Text style={styles.label}>Category</Text>
