@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useLayoutEffect} from 'react';
 import {Image, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {useNavigation} from '@react-navigation/core';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 import styles from './styles';
 import Text from 'components/Text';
@@ -9,10 +11,25 @@ import {hp, wp} from 'utils/Constants';
 import Button from 'components/Button';
 import Colors from 'utils/Colors';
 import useImagePicker from 'hooks/useImagePicker';
+import {RootStackParamList} from 'navigators/utils';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const AddFood = () => {
   const [heightOfDescription, setHeightOfDesciption] = useState(hp(6));
   const {openImageLibrary, pickedImage} = useImagePicker();
+  const navigation = useNavigation<
+    StackNavigationProp<RootStackParamList, 'AddFood'>
+  >();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity style={styles.save}>
+          <Icon name="save" size={wp(6)} color={Colors.black} />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>

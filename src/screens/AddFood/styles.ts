@@ -8,6 +8,7 @@ interface Style {
   label: TextStyle;
   image: ImageStyle;
   button: ViewStyle;
+  save: ViewStyle;
 }
 
 const styles = StyleSheet.create<Style>({
@@ -28,6 +29,9 @@ const styles = StyleSheet.create<Style>({
   button: {
     marginVertical: wp(2),
     marginBottom: wp(4),
+  },
+  save: {
+    padding: wp(2),
   },
 });
 
