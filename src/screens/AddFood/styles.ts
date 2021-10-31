@@ -1,6 +1,8 @@
 import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 
 import {hp, wp} from 'utils/Constants';
+import Colors from 'utils/Colors';
+import Fonts from 'utils/Fonts';
 
 interface Style {
   container: ViewStyle;
@@ -9,6 +11,11 @@ interface Style {
   image: ImageStyle;
   button: ViewStyle;
   save: ViewStyle;
+  dropdown: ViewStyle;
+  dropdownContainer: ViewStyle;
+  itemStyle: ViewStyle;
+  dropdownStyle: ViewStyle;
+  dropdownLabel: TextStyle;
 }
 
 const styles = StyleSheet.create<Style>({
@@ -32,6 +39,23 @@ const styles = StyleSheet.create<Style>({
   },
   save: {
     padding: wp(2),
+  },
+  dropdownContainer: {
+    height: hp(6),
+    marginTop: wp(2),
+  },
+  dropdown: {
+    backgroundColor: Colors.white,
+  },
+  itemStyle: {
+    justifyContent: 'flex-start',
+  },
+  dropdownStyle: {
+    backgroundColor: Colors.white,
+  },
+  dropdownLabel: {
+    fontSize: wp(3.2),
+    fontFamily: Fonts.b,
   },
 });
 

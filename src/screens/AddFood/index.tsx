@@ -3,6 +3,7 @@ import {Image, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/core';
 import {StackNavigationProp} from '@react-navigation/stack';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 import styles from './styles';
 import Text from 'components/Text';
@@ -58,7 +59,27 @@ const AddFood = () => {
         style={{height: heightOfDescription}}
       />
       <Text style={styles.label}>Category</Text>
-      <Input placeholder="Select the category." />
+      {/* <Input placeholder="Select the category." /> */}
+      <DropDownPicker
+        items={[
+          {
+            label: 'UK',
+            value: 'uk',
+          },
+          {
+            label: 'France',
+            value: 'france',
+          },
+        ]}
+        defaultValue={null}
+        containerStyle={styles.dropdownContainer}
+        style={styles.dropdown}
+        itemStyle={styles.itemStyle}
+        dropDownStyle={styles.dropdownStyle}
+        onChangeItem={() => {}}
+        placeholder="Select the category"
+        labelStyle={styles.dropdownLabel}
+      />
       <Text style={styles.label}>Image</Text>
       <Image
         source={
