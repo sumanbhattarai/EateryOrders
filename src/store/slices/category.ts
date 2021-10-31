@@ -89,7 +89,7 @@ const categorySlice = createSlice({
       (state, {payload: data}: PayloadAction<ICategory>) => {
         categoryAdaptor.upsertOne(state, data);
         state.status = RequestStatus.Fulfilled;
-        showSuccess(`Success! "${data.name}" has been added.`);
+        showSuccess(`Success! '${data.name}' has been added.`);
       },
     );
     builder.addCase(addCategory.rejected, (state) => {
