@@ -28,6 +28,7 @@ const styles = StyleSheet.create<Style>({
   },
   horizontalFlex: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   detail: {
     marginTop: hp(2),
