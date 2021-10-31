@@ -1,6 +1,7 @@
 import {StyleSheet, ViewStyle, ImageStyle, TextStyle} from 'react-native';
 
 import Colors from 'utils/Colors';
+import {wp} from 'utils/Constants';
 
 interface Style {
   container: ViewStyle;
@@ -15,7 +16,7 @@ interface Style {
 const styles = StyleSheet.create<Style>({
   container: {
     marginRight: 16,
-    padding: 8,
+    padding: wp(2),
     height: 260,
     width: 300,
     backgroundColor: Colors.white,

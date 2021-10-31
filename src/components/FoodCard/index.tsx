@@ -8,6 +8,7 @@ import styles from './styles';
 import Text from 'components/Text';
 import {useAppSelector} from 'services/TypedRedux';
 import {RootStackParamList} from 'navigators/utils';
+import Colors from 'utils/Colors';
 
 interface Props {
   id: string;
@@ -37,7 +38,7 @@ const FoodCard = ({id}: Props) => {
           <View style={styles.detailRow}>
             <Text type="sub-heading">{name}</Text>
             <Text style={styles.rating}>
-              <Icon name="star" size={16} /> 5.0
+              <Icon name="star" size={16} color={Colors.primary} /> 5.0
             </Text>
           </View>
           <View style={styles.detailRow}>
