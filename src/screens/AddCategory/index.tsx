@@ -11,6 +11,7 @@ import Colors from 'utils/Colors';
 import {addCategory} from 'store/slices/category';
 import {useAppDispatch, useAppSelector} from 'services/TypedRedux';
 import {RequestStatus} from 'store/utils';
+import {showError} from 'utils/Toast';
 
 const AddCategory = () => {
   const [category, setCategory] = useState<string>('');
@@ -18,6 +19,10 @@ const AddCategory = () => {
   const dispatch = useAppDispatch();
 
   const handlePress = () => {
+    if (!category) {
+      showError('Failed! Category name cannot be blank.');
+      return;
+    }
     dispatch(addCategory(category));
   };
 
