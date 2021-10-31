@@ -10,7 +10,7 @@ import {ICategory} from 'api/utils';
 import {properStringValue} from 'services/StringService';
 import {RootState} from 'store/index';
 import {RequestStatus} from 'store/utils';
-import {showError} from 'utils/Toast';
+import {showError, showSuccess} from 'utils/Toast';
 
 const categoryAdaptor = createEntityAdapter<ICategory>({
   selectId: (item) => item._id,
@@ -89,10 +89,12 @@ const categorySlice = createSlice({
       (state, {payload: data}: PayloadAction<ICategory>) => {
         categoryAdaptor.upsertOne(state, data);
         state.status = RequestStatus.Fulfilled;
+        showSuccess(`Success! "${data.name}" has been added.`);
       },
     );
     builder.addCase(addCategory.rejected, (state) => {
       state.status = RequestStatus.Rejected;
+      showSuccess('Failed! Something went wrong.');
     });
   },
 });
