@@ -4,6 +4,7 @@ import {
   NativeSyntheticEvent,
   ScrollView,
   TextInputContentSizeChangeEventData,
+  TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/core';
@@ -18,7 +19,6 @@ import Button from 'components/Button';
 import Colors from 'utils/Colors';
 import useImagePicker from 'hooks/useImagePicker';
 import {RootStackParamList} from 'navigators/utils';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useAppSelector} from 'services/TypedRedux';
 
 const AddFood = () => {
