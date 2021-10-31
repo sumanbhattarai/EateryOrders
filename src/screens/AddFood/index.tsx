@@ -3,6 +3,7 @@ import {Image, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/core';
 import {StackNavigationProp} from '@react-navigation/stack';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 import styles from './styles';
 import Text from 'components/Text';
@@ -13,10 +14,12 @@ import Colors from 'utils/Colors';
 import useImagePicker from 'hooks/useImagePicker';
 import {RootStackParamList} from 'navigators/utils';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useAppSelector} from 'services/TypedRedux';
 
 const AddFood = () => {
   const [heightOfDescription, setHeightOfDesciption] = useState(hp(6));
   const {openImageLibrary, pickedImage} = useImagePicker();
+  const {entities, ids} = useAppSelector((state) => state.category);
   const navigation = useNavigation<
     StackNavigationProp<RootStackParamList, 'AddFood'>
   >();
@@ -58,7 +61,21 @@ const AddFood = () => {
         style={{height: heightOfDescription}}
       />
       <Text style={styles.label}>Category</Text>
-      <Input placeholder="Select the category." />
+      <DropDownPicker
+        items={ids.map((el) => ({
+          label: entities[el]?.name,
+          value: entities[el]?.name,
+        }))}
+        defaultValue={null}
+        containerStyle={styles.dropdownContainer}
+        style={styles.dropdown}
+        itemStyle={styles.itemStyle}
+        dropDownStyle={styles.dropdownStyle}
+        onChangeItem={() => {}}
+        placeholder="Select the category"
+        labelStyle={styles.dropdownLabel}
+        placeholderStyle={styles.dropdownLabel}
+      />
       <Text style={styles.label}>Image</Text>
       <Image
         source={
