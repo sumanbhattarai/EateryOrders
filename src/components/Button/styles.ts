@@ -11,16 +11,14 @@ interface Style {
 
 const styles = StyleSheet.create<Style>({
   container: {
-    height: hp(6),
-    width: wp(80),
     backgroundColor: Colors.primary,
+    borderRadius: 4,
+    padding: wp(4),
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 4,
-    padding: wp(2),
   },
   title: {
-    fontSize: wp(4.4),
+    fontSize: wp(4),
     color: Colors.white,
     fontFamily: Fonts.regular,
   },

@@ -28,14 +28,13 @@ const styles = StyleSheet.create<Style>({
   },
   horizontalFlex: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   detail: {
     marginTop: hp(2),
   },
   button: {
-    width: wp(40),
     marginTop: hp(2),
+    marginRight: hp(2),
   },
 });
 
