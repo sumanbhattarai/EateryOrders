@@ -14,10 +14,12 @@ import Colors from 'utils/Colors';
 import useImagePicker from 'hooks/useImagePicker';
 import {RootStackParamList} from 'navigators/utils';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useAppSelector} from 'services/TypedRedux';
 
 const AddFood = () => {
   const [heightOfDescription, setHeightOfDesciption] = useState(hp(6));
   const {openImageLibrary, pickedImage} = useImagePicker();
+  const {entities, ids} = useAppSelector((state) => state.category);
   const navigation = useNavigation<
     StackNavigationProp<RootStackParamList, 'AddFood'>
   >();
@@ -59,18 +61,11 @@ const AddFood = () => {
         style={{height: heightOfDescription}}
       />
       <Text style={styles.label}>Category</Text>
-      {/* <Input placeholder="Select the category." /> */}
       <DropDownPicker
-        items={[
-          {
-            label: 'UK',
-            value: 'uk',
-          },
-          {
-            label: 'France',
-            value: 'france',
-          },
-        ]}
+        items={ids.map((el) => ({
+          label: entities[el]?.name,
+          value: entities[el]?.name,
+        }))}
         defaultValue={null}
         containerStyle={styles.dropdownContainer}
         style={styles.dropdown}
