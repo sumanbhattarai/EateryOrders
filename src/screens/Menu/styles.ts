@@ -5,7 +5,7 @@ import {hp, wp} from 'utils/Constants';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: wp(2),
+    padding: wp(2),
   },
   fullFlex: {
     flex: 1,
