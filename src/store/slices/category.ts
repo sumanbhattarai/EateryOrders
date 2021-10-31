@@ -94,7 +94,7 @@ const categorySlice = createSlice({
     );
     builder.addCase(addCategory.rejected, (state) => {
       state.status = RequestStatus.Rejected;
-      showSuccess('Failed! Something went wrong.');
+      showError('Failed! Something went wrong.');
     });
   },
 });
