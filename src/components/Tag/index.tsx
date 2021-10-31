@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     padding: wp(2),
     borderRightWidth: 2,
-    borderRightColor: Colors.black,
+    borderRightColor: Colors.grey,
     borderTopLeftRadius: 4,
     borderBottomLeftRadius: 4,
     marginBottom: 4,
