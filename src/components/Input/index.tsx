@@ -1,25 +1,27 @@
 import React, {useState} from 'react';
-import {TextInput, TextInputProps, StyleSheet} from 'react-native';
+import {TextInput, TextInputProps, StyleSheet, ViewStyle} from 'react-native';
 
-import {wp} from 'utils/Constants';
+import {hp, wp} from 'utils/Constants';
 import Colors from 'utils/Colors';
 import Fonts from 'utils/Fonts';
 
 const styles = StyleSheet.create({
   input: {
-    width: '100%',
+    width: wp(96),
     borderWidth: 1,
     paddingLeft: 8,
     marginVertical: 8,
     fontFamily: Fonts.regular,
-    height: 50,
+    height: hp(6),
     fontSize: wp(3.2),
   },
 });
 
-interface Props extends TextInputProps {}
+interface Props extends TextInputProps {
+  style?: ViewStyle;
+}
 
-const Input = ({...rest}: Props) => {
+const Input = ({style, ...rest}: Props) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
   return (
@@ -29,6 +31,7 @@ const Input = ({...rest}: Props) => {
         {
           borderColor: isFocused ? Colors.primary : Colors.lightGrey,
         },
+        style,
       ]}
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
