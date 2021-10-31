@@ -1,12 +1,13 @@
-import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 
 import {hp, wp} from 'utils/Constants';
-import Colors from 'utils/Colors';
 
 interface Style {
   container: ViewStyle;
   heading: TextStyle;
   label: TextStyle;
+  image: ImageStyle;
+  button: ViewStyle;
 }
 
 const styles = StyleSheet.create<Style>({
@@ -18,6 +19,15 @@ const styles = StyleSheet.create<Style>({
   },
   label: {
     marginTop: hp(2),
+  },
+  image: {
+    width: wp(96),
+    height: wp(96),
+    marginTop: wp(2),
+  },
+  button: {
+    marginVertical: wp(2),
+    marginBottom: wp(4),
   },
 });
 
