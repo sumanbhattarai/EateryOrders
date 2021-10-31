@@ -74,6 +74,7 @@ const AddFood = () => {
         onChangeItem={() => {}}
         placeholder="Select the category"
         labelStyle={styles.dropdownLabel}
+        placeholderStyle={styles.dropdownLabel}
       />
       <Text style={styles.label}>Image</Text>
       <Image

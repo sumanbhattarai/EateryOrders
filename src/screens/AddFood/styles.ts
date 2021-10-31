@@ -55,7 +55,7 @@ const styles = StyleSheet.create<Style>({
   },
   dropdownLabel: {
     fontSize: wp(3.2),
-    fontFamily: Fonts.b,
+    fontFamily: Fonts.regular,
   },
 });
 
