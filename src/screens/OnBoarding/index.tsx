@@ -8,6 +8,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import VectorIcon from 'react-native-vector-icons/MaterialIcons';
 
 import styles from './styles';
 import onBoardingData, {OnBoardingDataType} from './utils';
@@ -71,12 +72,12 @@ const OnBoarding = ({onGetStarted}: {onGetStarted: () => void}) => {
       </View>
       <View style={styles.footer}>
         <Button
-          title="Get started"
           // eslint-disable-next-line react-native/no-inline-styles
           style={[styles.button, {opacity: disabled.current ? 0.7 : 1}]}
           onPress={onGetStarted}
-          disabled={disabled.current}
-        />
+          disabled={disabled.current}>
+          <VectorIcon name="arrow-forward" size={wp(6)} color={Colors.white} />
+        </Button>
       </View>
     </ImageBackground>
   );

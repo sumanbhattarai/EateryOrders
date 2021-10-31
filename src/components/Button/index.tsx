@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, ReactNode} from 'react';
 import {
   TouchableOpacity,
   Text,
@@ -13,11 +13,12 @@ import useConnection from 'hooks/useConnection';
 import Colors from 'utils/Colors';
 
 interface Props extends TouchableOpacityProps {
-  title: string;
+  title?: string;
   needsInternet?: boolean;
   loading?: boolean;
   style?: ViewStyle | ViewStyle[];
   textStyle?: TextStyle | TextStyle[];
+  children?: ReactNode;
 }
 
 const Button = ({
@@ -26,6 +27,7 @@ const Button = ({
   loading = false,
   style,
   textStyle,
+  children,
   ...rest
 }: Props) => {
   const {status} = useConnection();
@@ -45,6 +47,8 @@ const Button = ({
       {...rest}>
       {loading ? (
         <ActivityIndicator size="small" color={Colors.white} />
+      ) : children ? (
+        children
       ) : (
         <Text style={[styles.title, textStyle]}>{title}</Text>
       )}
