@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import {View, FlatList, TouchableOpacity, Image, Switch} from 'react-native';
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
@@ -67,7 +67,14 @@ const Account = () => {
             />
           ) : (
             <TouchableOpacity onPress={item.action}>
-              <Icon name="chevron-small-right" size={wp(6)} />
+              <Icon
+                name={
+                  item.name === optionsConstant.logout
+                    ? 'logout'
+                    : 'chevron-right'
+                }
+                size={wp(6)}
+              />
             </TouchableOpacity>
           )}
         </View>
