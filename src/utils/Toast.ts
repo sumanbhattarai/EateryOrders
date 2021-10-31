@@ -5,7 +5,7 @@ import Fonts from 'utils/Fonts';
 const customStyling: Partial<MessageOptions> = {
   floating: true,
   titleStyle: {
-    fontFamily: Fonts.bold,
+    fontFamily: Fonts.regular,
   },
   textStyle: {
     fontFamily: Fonts.regular,
