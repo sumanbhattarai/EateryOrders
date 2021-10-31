@@ -1,12 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {
-  FlatList,
-  View,
-  Text,
-  Image,
-  NativeScrollEvent,
-  ImageBackground,
-} from 'react-native';
+import {FlatList, View, Text, Image, NativeScrollEvent} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import VectorIcon from 'react-native-vector-icons/MaterialIcons';
 
@@ -42,10 +35,7 @@ const OnBoarding = ({onGetStarted}: {onGetStarted: () => void}) => {
   };
 
   return (
-    <ImageBackground
-      source={require('assets/images/wallpaper.jpg')}
-      blurRadius={100}
-      style={styles.container}>
+    <View style={styles.container}>
       <FlatList
         keyExtractor={(item) => item.id.toString()}
         data={onBoardingData}
@@ -63,7 +53,7 @@ const OnBoarding = ({onGetStarted}: {onGetStarted: () => void}) => {
             <Text key={index} style={styles.dot}>
               <Icon
                 name={index === activeIndex ? 'circle' : 'circle-o'}
-                color={Colors.white}
+                color={Colors.black}
                 size={wp(3)}
               />
             </Text>
@@ -79,7 +69,7 @@ const OnBoarding = ({onGetStarted}: {onGetStarted: () => void}) => {
           <VectorIcon name="arrow-forward" size={wp(6)} color={Colors.white} />
         </Button>
       </View>
-    </ImageBackground>
+    </View>
   );
 };
 
