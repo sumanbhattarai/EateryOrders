@@ -9,8 +9,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.primary,
     padding: wp(2),
-    borderRightWidth: 1,
-    borderRightColor: Colors.error,
+    borderRightWidth: 2,
+    borderRightColor: Colors.black,
     borderTopLeftRadius: 4,
     borderBottomLeftRadius: 4,
     marginBottom: 4,
