@@ -22,7 +22,7 @@ const styles = StyleSheet.create<Styles>({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: Colors.white,
+    backgroundColor: Colors.white,
   },
   onBoardCard: {
     width: Width,
@@ -39,7 +39,7 @@ const styles = StyleSheet.create<Styles>({
     textAlign: 'center',
     padding: wp(4),
     marginTop: hp(4),
-    color: Colors.white,
+    color: Colors.black,
   },
   footer: {
     paddingVertical: hp(4),
