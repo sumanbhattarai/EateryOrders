@@ -45,6 +45,10 @@ const Account = () => {
         },
       },
       {
+        name: optionsConstant.ordersHistory,
+        action: () => {},
+      },
+      {
         name: optionsConstant.logout,
         action: () => {},
       },

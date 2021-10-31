@@ -4,4 +4,5 @@ export const optionsConstant = {
   settings: 'Settings',
   hotelOpenStatus: 'Hotel Open Status',
   logout: 'Logout',
+  ordersHistory: 'Orders History',
 };
