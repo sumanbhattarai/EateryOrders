@@ -14,6 +14,8 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.regular,
     height: hp(6),
     fontSize: wp(3.2),
+    backgroundColor: Colors.white,
+    borderRadius: 4,
   },
 });
 
