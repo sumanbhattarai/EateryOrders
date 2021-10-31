@@ -28,7 +28,7 @@ const Detail = ({route}: Props) => {
         </Text>
         <View style={styles.horizontalFlex}>
           <Text color={Colors.grey}>{category}</Text>
-          <Text color={Colors.grey}>Rs.{price}</Text>
+          <Text color={Colors.grey}>Rs. {price}</Text>
         </View>
         <View style={styles.detail}>
           <Text>
