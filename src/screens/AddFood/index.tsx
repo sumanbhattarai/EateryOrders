@@ -5,6 +5,7 @@ import {
   ScrollView,
   TextInputContentSizeChangeEventData,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/core';
@@ -60,7 +61,10 @@ const AddFood = () => {
   );
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      style={styles.container}
+      showsVerticalScrollIndicator={false}
+      onScrollBeginDrag={Keyboard.dismiss}>
       <Text style={styles.heading}>
         Enter the details of the food items you want to add. Make sure the food
         item is not already in the list.
