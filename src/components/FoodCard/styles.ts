@@ -15,11 +15,16 @@ interface Style {
 
 const styles = StyleSheet.create<Style>({
   container: {
-    marginRight: 16,
+    marginRight: wp(2),
     padding: wp(2),
     height: 260,
     width: 300,
     backgroundColor: Colors.white,
+    borderRightColor: Colors.lightGrey,
+    borderRightWidth: 2,
+    borderBottomColor: Colors.lightGrey,
+    borderBottomWidth: 1,
+    borderBottomRightRadius: 25,
   },
   image: {
     height: 180,
