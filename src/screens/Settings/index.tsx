@@ -3,8 +3,9 @@ import {FlatList, View, Switch} from 'react-native';
 
 import styles from './styles';
 import Text from 'components/Text';
-import {settingsConstants, switchColor} from './utils';
+import {settingsConstants} from './utils';
 import Colors from 'utils/Colors';
+import {switchColor} from 'utils/Constants';
 
 type button = {
   name: string;

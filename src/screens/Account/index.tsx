@@ -1,20 +1,24 @@
-import React, {useMemo} from 'react';
-import {View, FlatList, TouchableOpacity, Image} from 'react-native';
+import React, {useMemo, useState} from 'react';
+import {View, FlatList, TouchableOpacity, Image, Switch} from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 import styles from './styles';
 import Text from 'components/Text';
-import {brandName, wp} from 'utils/Constants';
+import {brandName, wp, switchColor} from 'utils/Constants';
 import {RootStackParamList} from 'navigators/utils';
+import {optionsConstant} from './utils';
+import Colors from 'utils/Colors';
 
 type button = {
   name: string;
-  action: () => any;
+  action: (val?: any) => void;
 };
 
 const Account = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(true);
+
   const navigation = useNavigation<
     StackNavigationProp<RootStackParamList, 'Settings'>
   >();
@@ -22,19 +26,26 @@ const Account = () => {
   const buttons: Array<button> = useMemo(
     () => [
       {
-        name: 'Add a category',
+        name: optionsConstant.addCategory,
         action: () => navigation.navigate('AddCategory'),
       },
       {
-        name: 'Add a food item',
+        name: optionsConstant.addFoodItem,
         action: () => navigation.navigate('AddFood'),
       },
       {
-        name: 'Settings',
+        name: optionsConstant.settings,
         action: () => navigation.navigate('Settings'),
       },
       {
-        name: 'Logout',
+        name: optionsConstant.hotelOpenStatus,
+        action: (val: boolean) => {
+          setIsOpen(val);
+          // TODO: API Call
+        },
+      },
+      {
+        name: optionsConstant.logout,
         action: () => {},
       },
     ],
@@ -43,12 +54,24 @@ const Account = () => {
 
   const renderButtons = ({item}: {item: button}) => {
     return (
-      <TouchableOpacity onPress={item.action} style={styles.buttonView}>
+      <View style={styles.buttonView}>
         <View style={styles.horizontalFlex}>
           <Text>{item.name}</Text>
-          <Icon name="chevron-small-right" size={wp(6)} />
+          {item.name === optionsConstant.hotelOpenStatus ? (
+            <Switch
+              trackColor={switchColor}
+              thumbColor={Colors.white}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={item.action}
+              value={isOpen}
+            />
+          ) : (
+            <TouchableOpacity onPress={item.action}>
+              <Icon name="chevron-small-right" size={wp(6)} />
+            </TouchableOpacity>
+          )}
         </View>
-      </TouchableOpacity>
+      </View>
     );
   };
 
