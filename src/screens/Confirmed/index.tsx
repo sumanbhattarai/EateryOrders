@@ -1,10 +1,12 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
+
+import Text from 'components/Text';
 
 const Confirmed = () => {
   return (
     <View>
-      <Text>Confirmed Screen</Text>
+      <Text>CONFIRMED</Text>
     </View>
   );
 };

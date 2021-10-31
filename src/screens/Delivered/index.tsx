@@ -1,10 +1,12 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
+
+import Text from 'components/Text';
 
 const Delivered = () => {
   return (
     <View>
-      <Text>Delivered Screen</Text>
+      <Text>DELIVERED</Text>
     </View>
   );
 };
