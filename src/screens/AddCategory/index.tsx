@@ -38,12 +38,12 @@ const AddCategory = () => {
         value={category}
         onChangeText={(val) => setCategory(val)}
       />
-      <Button style={styles.button} onPress={handlePress}>
-        {status === RequestStatus.Pending ? (
-          <ActivityIndicator size="small" color={Colors.white} />
-        ) : (
-          <Icon name="save" size={wp(6)} color={Colors.white} />
-        )}
+      <Button
+        style={styles.button}
+        onPress={handlePress}
+        needsInternet={true}
+        loading={status === RequestStatus.Pending}>
+        <Icon name="save" size={wp(6)} color={Colors.white} />
       </Button>
     </View>
   );
