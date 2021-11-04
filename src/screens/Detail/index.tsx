@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Image, ScrollView} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import {RouteProp} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import FastImage from 'react-native-fast-image';
 
 import styles from './styles';
 import {useAppSelector} from 'services/TypedRedux';
@@ -21,7 +22,10 @@ const Detail = ({route}: Props) => {
   const {name, category, price} = entities[id]!;
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <Image source={require('assets/images/pizza.png')} style={styles.image} />
+      <FastImage
+        source={require('assets/images/pizza.png')}
+        style={styles.image}
+      />
       <View style={styles.informationBox}>
         <Text type="heading" style={styles.heading}>
           {name}

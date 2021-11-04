@@ -1,7 +1,8 @@
 import React, {useState, useRef} from 'react';
-import {FlatList, View, Text, Image, NativeScrollEvent} from 'react-native';
+import {FlatList, View, Text, NativeScrollEvent} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import VectorIcon from 'react-native-vector-icons/MaterialIcons';
+import FastImage from 'react-native-fast-image';
 
 import styles from './styles';
 import onBoardingData, {OnBoardingDataType} from './utils';
@@ -13,7 +14,7 @@ const OnBoardCard = ({data}: {data: OnBoardingDataType}) => {
   const {image, text} = data;
   return (
     <View style={styles.onBoardCard}>
-      <Image source={image} style={styles.image} />
+      <FastImage source={image} style={styles.image} />
       <Text style={styles.text}>{text.toUpperCase()}</Text>
     </View>
   );

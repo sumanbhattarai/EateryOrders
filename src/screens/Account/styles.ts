@@ -1,4 +1,5 @@
-import {ViewStyle, StyleSheet, TextStyle, ImageStyle} from 'react-native';
+import {ViewStyle, StyleSheet, TextStyle} from 'react-native';
+import {ImageStyle} from 'react-native-fast-image';
 
 import {hp, wp} from 'utils/Constants';
 import Colors from 'utils/Colors';

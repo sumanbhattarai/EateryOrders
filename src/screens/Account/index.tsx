@@ -1,8 +1,9 @@
 import React, {useMemo, useState} from 'react';
-import {View, FlatList, TouchableOpacity, Image, Switch} from 'react-native';
+import {View, FlatList, TouchableOpacity, Switch} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import FastImage from 'react-native-fast-image';
 
 import styles from './styles';
 import Text from 'components/Text';
@@ -88,7 +89,10 @@ const Account = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('assets/images/logo.png')} style={styles.image} />
+      <FastImage
+        source={require('assets/images/logo.png')}
+        style={styles.image}
+      />
       <Text style={styles.title} type="sub-heading">
         {brandName}
       </Text>
