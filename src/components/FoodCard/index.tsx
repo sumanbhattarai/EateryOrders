@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, TouchableOpacity, Image} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import FastImage from 'react-native-fast-image';
 
 import styles from './styles';
 import Text from 'components/Text';
@@ -29,7 +30,7 @@ const FoodCard = ({id}: Props) => {
     <TouchableOpacity activeOpacity={0.7} onPress={handleNavigation}>
       <View style={styles.container}>
         <View>
-          <Image
+          <FastImage
             source={require('assets/images/pizza.png')}
             style={styles.image}
           />

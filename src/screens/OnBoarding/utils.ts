@@ -1,8 +1,8 @@
-import {ImageSourcePropType} from 'react-native';
+import {Source} from 'react-native-fast-image';
 
 export interface OnBoardingDataType {
   id: number;
-  image: ImageSourcePropType;
+  image: number | Source;
   text: string;
 }
 const onBoardingData: Array<OnBoardingDataType> = [
