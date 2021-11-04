@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/core';
 import {StackNavigationProp} from '@react-navigation/stack';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {ImagePickerResponse} from 'react-native-image-picker';
 
 import styles from './styles';
 import Text from 'components/Text';
@@ -21,8 +22,52 @@ import Colors from 'utils/Colors';
 import useImagePicker from 'hooks/useImagePicker';
 import {RootStackParamList} from 'navigators/utils';
 import {useAppSelector} from 'services/TypedRedux';
+import {properStringValue} from 'services/StringService';
+import {showError} from 'utils/Toast';
+
+const validateInputs: ({
+  name,
+  price,
+  category,
+  pickedImage,
+  description,
+}: {
+  name: string;
+  price: string;
+  category: string;
+  pickedImage: ImagePickerResponse | undefined;
+  description: string;
+}) => boolean = ({name, price, category, pickedImage, description}) => {
+  if (
+    properStringValue(name) &&
+    price &&
+    category &&
+    pickedImage &&
+    properStringValue(description)
+  ) {
+    return true;
+  }
+  if (!properStringValue(name)) {
+    showError('Failed! Invalid food name.');
+  } else if (!price) {
+    showError('Failed! Invalid food price.');
+  } else if (!description) {
+    showError('Failed! Invalid food description.');
+  } else if (!category) {
+    showError('Failed! Please pick a category.');
+  } else if (!pickedImage) {
+    showError('Failed! Please choose an image.');
+  } else {
+    return false;
+  }
+  return false;
+};
 
 const AddFood = () => {
+  const [name, setName] = useState<string>('');
+  const [price, setPrice] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [category, setCategory] = useState<string>('');
   const [heightOfDescription, setHeightOfDesciption] = useState(hp(6));
   const {openImageLibrary, pickedImage} = useImagePicker();
   const {entities, ids} = useAppSelector((state) => state.category);
@@ -39,15 +84,27 @@ const AddFood = () => {
     [entities, ids],
   );
 
+  const handleSubmit = useCallback(() => {
+    const isValid = validateInputs({
+      name,
+      price,
+      category,
+      pickedImage,
+      description,
+    });
+    if (isValid) {
+    }
+  }, [name, price, category, pickedImage, description]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity style={styles.save}>
+        <TouchableOpacity style={styles.save} onPress={handleSubmit}>
           <Icon name="save" size={wp(6)} color={Colors.black} />
         </TouchableOpacity>
       ),
     });
-  }, [navigation]);
+  }, [navigation, handleSubmit]);
 
   const handleContentSizeChange = useCallback(
     (e: NativeSyntheticEvent<TextInputContentSizeChangeEventData>) => {
@@ -70,11 +127,17 @@ const AddFood = () => {
         item is not already in the list.
       </Text>
       <Text style={styles.label}>Name</Text>
-      <Input placeholder="Enter the name of the food." />
+      <Input
+        placeholder="Enter the name of the food."
+        value={name}
+        onChangeText={(val) => setName(val)}
+      />
       <Text style={styles.label}>Price</Text>
       <Input
         placeholder="Enter the price of the food."
         keyboardType="number-pad"
+        value={price}
+        onChangeText={(val) => setPrice(val)}
       />
       <Text style={styles.label}>Description</Text>
       <Input
@@ -82,6 +145,8 @@ const AddFood = () => {
         multiline
         onContentSizeChange={handleContentSizeChange}
         style={{height: heightOfDescription}}
+        value={description}
+        onChangeText={(val) => setDescription(val)}
       />
       <Text style={styles.label}>Category</Text>
       <DropDownPicker
@@ -91,7 +156,7 @@ const AddFood = () => {
         style={styles.dropdown}
         itemStyle={styles.itemStyle}
         dropDownStyle={styles.dropdownStyle}
-        onChangeItem={() => {}}
+        onChangeItem={(val) => setCategory(val)}
         placeholder="Select the category"
         labelStyle={styles.dropdownLabel}
         placeholderStyle={styles.dropdownLabel}
