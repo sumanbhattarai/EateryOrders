@@ -1,9 +1,11 @@
 import React from 'react';
+import {StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Entypo';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 import AddFood from 'screens/AddFood';
 import AddCategory from 'screens/AddCategory';
@@ -24,22 +26,28 @@ const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 const TopTab = createMaterialTopTabNavigator<TopTabParamList>();
 
+const styles = StyleSheet.create({
+  fullScreen: {flex: 1},
+});
+
 const OrderTab = () => {
   return (
-    <TopTab.Navigator
-      tabBarOptions={{
-        labelStyle: {
-          fontSize: 12,
-          fontFamily: Font.regular,
-        },
-        indicatorStyle: {
-          backgroundColor: Color.primary,
-        },
-      }}>
-      <TopTab.Screen name="Recieved" component={Recieved} />
-      <TopTab.Screen name="Confirmed" component={Confirmed} />
-      <TopTab.Screen name="Delivered" component={Delivered} />
-    </TopTab.Navigator>
+    <SafeAreaView style={styles.fullScreen}>
+      <TopTab.Navigator
+        tabBarOptions={{
+          labelStyle: {
+            fontSize: 12,
+            fontFamily: Font.regular,
+          },
+          indicatorStyle: {
+            backgroundColor: Color.primary,
+          },
+        }}>
+        <TopTab.Screen name="Recieved" component={Recieved} />
+        <TopTab.Screen name="Confirmed" component={Confirmed} />
+        <TopTab.Screen name="Delivered" component={Delivered} />
+      </TopTab.Navigator>
+    </SafeAreaView>
   );
 };
 
