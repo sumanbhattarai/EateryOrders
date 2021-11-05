@@ -6,6 +6,7 @@ import {
   TextInputContentSizeChangeEventData,
   TouchableOpacity,
   Keyboard,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/core';
@@ -21,9 +22,11 @@ import Button from 'components/Button';
 import Colors from 'utils/Colors';
 import useImagePicker from 'hooks/useImagePicker';
 import {RootStackParamList} from 'navigators/utils';
-import {useAppSelector} from 'services/TypedRedux';
+import {useAppSelector, useAppDispatch} from 'services/TypedRedux';
 import {properStringValue} from 'services/StringService';
 import {showError} from 'utils/Toast';
+import {addMenu} from 'store/slices/menu';
+import {RequestStatus} from 'store/utils';
 
 const validateInputs: ({
   name,
@@ -74,6 +77,9 @@ const AddFood = () => {
   const navigation = useNavigation<
     StackNavigationProp<RootStackParamList, 'AddFood'>
   >();
+  const {status: menuStatus} = useAppSelector((state) => state.menu);
+  const isLoading = menuStatus === RequestStatus.Pending;
+  const dispatch = useAppDispatch();
 
   const categories = useMemo(
     () =>
@@ -93,18 +99,28 @@ const AddFood = () => {
       description,
     });
     if (isValid) {
+      dispatch(
+        addMenu({name, price, description, image: 'teststring', category}),
+      );
     }
-  }, [name, price, category, pickedImage, description]);
+  }, [name, price, category, pickedImage, description, dispatch]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity style={styles.save} onPress={handleSubmit}>
-          <Icon name="save" size={wp(6)} color={Colors.black} />
+        <TouchableOpacity
+          style={styles.save}
+          disabled={isLoading}
+          onPress={handleSubmit}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color={Colors.black} />
+          ) : (
+            <Icon name="save" size={wp(6)} color={Colors.black} />
+          )}
         </TouchableOpacity>
       ),
     });
-  }, [navigation, handleSubmit]);
+  }, [navigation, handleSubmit, isLoading]);
 
   const handleContentSizeChange = useCallback(
     (e: NativeSyntheticEvent<TextInputContentSizeChangeEventData>) => {

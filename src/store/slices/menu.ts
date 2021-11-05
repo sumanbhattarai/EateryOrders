@@ -2,10 +2,9 @@ import {
   createAsyncThunk,
   createEntityAdapter,
   createSlice,
-  PayloadAction,
 } from '@reduxjs/toolkit';
 
-import {apiGetMenu} from 'api/method/menu';
+import {apiAddFood, apiGetMenu} from 'api/method/menu';
 import {IFoodItem} from 'api/utils';
 import {
   getFoodItemArray,
@@ -14,6 +13,7 @@ import {
   RequestStatus,
 } from 'store/utils';
 import {RootState} from 'store/';
+import {showError, showSuccess} from 'utils/Toast';
 
 const menuAdapter = createEntityAdapter<IFoodItem>({
   selectId: (item) => item._id,
@@ -52,6 +52,42 @@ const fetchMenu = createAsyncThunk(
   },
 );
 
+const addMenu = createAsyncThunk(
+  'menu/add',
+  async ({
+    name,
+    category,
+    price,
+    image,
+    description,
+  }: {
+    name: string;
+    category: string;
+    price: string;
+    image: string; // TODO: Have to change it to ImagePickerResponse
+    description: string;
+  }) => {
+    const response = await apiAddFood({
+      name,
+      category,
+      price,
+      image,
+      description,
+    });
+    if (!response.success) {
+      throw new Error(response.message);
+    }
+    return response.data as IFoodItem;
+  },
+  {
+    condition: (_, {getState}) => {
+      const rootState = getState() as RootState;
+      const {status} = rootState.menu;
+      return status !== RequestStatus.Pending;
+    },
+  },
+);
+
 const menuSlice = createSlice({
   name: 'menu',
   initialState,
@@ -60,27 +96,28 @@ const menuSlice = createSlice({
     builder.addCase(fetchMenu.pending, (state) => {
       state.status = RequestStatus.Pending;
     });
-    builder.addCase(
-      fetchMenu.fulfilled,
-      (
-        state,
-        {
-          payload: {foodItems, menus},
-        }: PayloadAction<{
-          foodItems: Array<IFoodItem>;
-          menus: IMappedMenus;
-        }>,
-      ) => {
-        menuAdapter.upsertMany(state, foodItems);
-        state.menus = menus;
-        state.status = RequestStatus.Fulfilled;
-      },
-    );
+    builder.addCase(fetchMenu.fulfilled, (state, action) => {
+      menuAdapter.upsertMany(state, action.payload.foodItems);
+      state.menus = action.payload.menus;
+      state.status = RequestStatus.Fulfilled;
+    });
     builder.addCase(fetchMenu.rejected, (state) => {
+      state.status = RequestStatus.Rejected;
+    });
+    builder.addCase(addMenu.pending, (state) => {
+      state.status = RequestStatus.Pending;
+    });
+    builder.addCase(addMenu.fulfilled, (state, action) => {
+      menuAdapter.upsertOne(state, action.payload);
+      showSuccess(`Success! '${action.payload.name}' has been added.`);
+      state.status = RequestStatus.Fulfilled;
+    });
+    builder.addCase(addMenu.rejected, (state, action) => {
+      showError(action.error.message || 'Failed! Something went wrong.');
       state.status = RequestStatus.Rejected;
     });
   },
 });
 
 export default menuSlice.reducer;
-export {fetchMenu};
+export {fetchMenu, addMenu};
