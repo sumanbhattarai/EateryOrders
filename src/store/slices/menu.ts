@@ -17,8 +17,6 @@ import {showError, showSuccess} from 'utils/Toast';
 
 const menuAdapter = createEntityAdapter<IFoodItem>({
   selectId: (item) => item._id,
-  sortComparer: (a, b) =>
-    a.name.toUpperCase().localeCompare(b.name.toUpperCase()),
 });
 
 const initialState = menuAdapter.getInitialState<{
@@ -58,26 +56,26 @@ const addMenu = createAsyncThunk(
     name,
     category,
     price,
-    image,
+    photo,
     description,
   }: {
     name: string;
     category: string;
     price: string;
-    image: string; // TODO: Have to change it to ImagePickerResponse
+    photo: string; // TODO: Have to change it to ImagePickerResponse
     description: string;
   }) => {
     const response = await apiAddFood({
       name,
       category,
       price,
-      image,
+      photo,
       description,
     });
     if (!response.success) {
       throw new Error(response.message);
     }
-    return response.data as IFoodItem;
+    return response.data?.model as IFoodItem;
   },
   {
     condition: (_, {getState}) => {
@@ -109,6 +107,11 @@ const menuSlice = createSlice({
     });
     builder.addCase(addMenu.fulfilled, (state, action) => {
       menuAdapter.upsertOne(state, action.payload);
+      if (Object.keys(state.menus).includes(action.payload.category)) {
+        state.menus[action.payload.category].push(action.payload._id);
+      } else {
+        state.menus[action.payload.category] = [action.payload._id];
+      }
       showSuccess(`Success! '${action.payload.name}' has been added.`);
       state.status = RequestStatus.Fulfilled;
     });

@@ -32,20 +32,17 @@ const validateInputs: ({
   name,
   price,
   category,
-  pickedImage,
   description,
 }: {
   name: string;
   price: string;
   category: string;
-  pickedImage: ImagePickerResponse | undefined;
   description: string;
-}) => boolean = ({name, price, category, pickedImage, description}) => {
+}) => boolean = ({name, price, category, description}) => {
   if (
     properStringValue(name) &&
     price &&
     category &&
-    pickedImage &&
     properStringValue(description)
   ) {
     return true;
@@ -58,8 +55,6 @@ const validateInputs: ({
     showError('Failed! Invalid food description.');
   } else if (!category) {
     showError('Failed! Please pick a category.');
-  } else if (!pickedImage) {
-    showError('Failed! Please choose an image.');
   } else {
     return false;
   }
@@ -95,15 +90,14 @@ const AddFood = () => {
       name,
       price,
       category,
-      pickedImage,
       description,
     });
     if (isValid) {
       dispatch(
-        addMenu({name, price, description, image: 'teststring', category}),
+        addMenu({name, price, description, photo: 'teststring', category}),
       );
     }
-  }, [name, price, category, pickedImage, description, dispatch]);
+  }, [name, price, category, description, dispatch]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -172,7 +166,7 @@ const AddFood = () => {
         style={styles.dropdown}
         itemStyle={styles.itemStyle}
         dropDownStyle={styles.dropdownStyle}
-        onChangeItem={(val) => setCategory(val)}
+        onChangeItem={(val) => setCategory(val.value)}
         placeholder="Select the category"
         labelStyle={styles.dropdownLabel}
         placeholderStyle={styles.dropdownLabel}

@@ -36,7 +36,7 @@ const makeRequest = async <R>(config: AxiosRequestConfig): Promise<R> => {
       success: true,
       data: response.data,
     } as any) as R;
-  } catch (error) {
+  } catch (error: any) {
     Logger.error(error.message);
     return ({
       success: false,

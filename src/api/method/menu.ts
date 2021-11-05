@@ -13,10 +13,10 @@ const apiAddFood = (data: {
   name: string;
   category: string;
   price: string;
-  image: string; // TODO: Have to change it to ImagePickerResponse
+  photo: string; // TODO: Have to change it to ImagePickerResponse
   description: string;
 }) =>
-  makeRequest<IApiResponse<IFoodItem>>({
+  makeRequest<IApiResponse<{message: string; model: IFoodItem}>>({
     url: Routes.AddFood,
     method: 'POST',
     data,
