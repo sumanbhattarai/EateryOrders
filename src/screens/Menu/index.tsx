@@ -13,6 +13,7 @@ import {hp} from 'utils/Constants';
 import {RequestStatus} from 'store/utils';
 import FoodCard from 'components/FoodCard';
 import Search from './components/Search';
+import useFoodSearch from './hooks/useFoodSearch';
 
 interface Props {}
 
@@ -21,6 +22,7 @@ const Menu = ({}: Props) => {
   const {status, ids, menus} = useAppSelector((state) => state.menu);
   const isLoading = status === RequestStatus.Pending;
   const dispatch = useAppDispatch();
+  const data = useFoodSearch({menus, search});
 
   const loadAppDataAsync = useCallback(() => {
     dispatch(fetchCategory());
@@ -50,7 +52,7 @@ const Menu = ({}: Props) => {
           tWidth={'100%'}
           animationDuration={1000}>
           <FlatList
-            data={Object.keys(menus)}
+            data={Object.keys(data)}
             keyExtractor={(item, index) => `${item}-${index}`}
             showsVerticalScrollIndicator={false}
             onScroll={Keyboard.dismiss}
@@ -61,7 +63,7 @@ const Menu = ({}: Props) => {
               />
             }
             renderItem={({item}) => {
-              const idsArray = menus[item];
+              const idsArray = data[item];
               return (
                 <View style={styles.cardContainer}>
                   <Tag title={item} />
