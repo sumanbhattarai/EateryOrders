@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {View, FlatList, Keyboard, RefreshControl} from 'react-native';
 import ContentLoader from 'react-native-easy-content-loader';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -12,13 +12,17 @@ import {hp} from 'utils/Constants';
 // import Greeting from './components/Greeting';
 import {RequestStatus} from 'store/utils';
 import FoodCard from 'components/FoodCard';
+import Search from './components/Search';
+import useFoodSearch from './hooks/useFoodSearch';
 
 interface Props {}
 
 const Menu = ({}: Props) => {
+  const [search, setSearch] = useState<string>('');
   const {status, ids, menus} = useAppSelector((state) => state.menu);
   const isLoading = status === RequestStatus.Pending;
   const dispatch = useAppDispatch();
+  const data = useFoodSearch({menus, search});
 
   const loadAppDataAsync = useCallback(() => {
     dispatch(fetchCategory());
@@ -33,6 +37,12 @@ const Menu = ({}: Props) => {
     <View style={styles.container}>
       <SafeAreaView style={styles.fullFlex}>
         {/* <Greeting /> */}
+        <Search
+          placeholder="Enter the food item to search."
+          value={search}
+          onChangeText={(val) => setSearch(val)}
+          clearSearch={() => setSearch('')}
+        />
         <ContentLoader
           loading={isLoading && ids.length < 1}
           listSize={6}
@@ -42,7 +52,7 @@ const Menu = ({}: Props) => {
           tWidth={'100%'}
           animationDuration={1000}>
           <FlatList
-            data={Object.keys(menus)}
+            data={Object.keys(data)}
             keyExtractor={(item, index) => `${item}-${index}`}
             showsVerticalScrollIndicator={false}
             onScroll={Keyboard.dismiss}
@@ -53,7 +63,7 @@ const Menu = ({}: Props) => {
               />
             }
             renderItem={({item}) => {
-              const idsArray = menus[item];
+              const idsArray = data[item];
               return (
                 <View style={styles.cardContainer}>
                   <Tag title={item} />
