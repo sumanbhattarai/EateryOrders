@@ -50,7 +50,8 @@ const Menu = ({}: Props) => {
           pHeight={[hp(14), hp(6)]}
           pWidth={['100%', '100%']}
           tWidth={'100%'}
-          animationDuration={1000}>
+          animationDuration={1000}
+          containerStyles={styles.cardContainer}>
           <FlatList
             data={Object.keys(data)}
             keyExtractor={(item, index) => `${item}-${index}`}
