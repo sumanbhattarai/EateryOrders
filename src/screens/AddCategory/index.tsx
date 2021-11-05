@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -17,6 +17,12 @@ const AddCategory = () => {
   const [category, setCategory] = useState<string>('');
   const {status} = useAppSelector((state) => state.category);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (status === RequestStatus.Fulfilled) {
+      setCategory('');
+    }
+  }, [status]);
 
   const handlePress = () => {
     if (!category) {
