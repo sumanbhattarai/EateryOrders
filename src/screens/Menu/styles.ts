@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cardContainer: {
-    marginTop: hp(2),
+    marginTop: wp(2),
   },
 });
 

@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     borderRightColor: Colors.grey,
     borderTopLeftRadius: 4,
     borderBottomLeftRadius: 4,
-    marginBottom: 4,
+    // marginBottom: 4,
   },
 });
 
