@@ -19,7 +19,7 @@ interface Props {
 const Detail = ({route}: Props) => {
   const {entities} = useAppSelector((state) => state.menu);
   const id = route.params.id;
-  const {name, category, price} = entities[id]!;
+  const {name, category, price, description} = entities[id]!;
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <FastImage
@@ -35,44 +35,7 @@ const Detail = ({route}: Props) => {
           <Text color={Colors.grey}>Rs. {price}</Text>
         </View>
         <View style={styles.detail}>
-          <Text>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur
-            corrupti, commodi maxime officia odio asperiores temporibus quos
-            omnis ut necessitatibus minus quam, molestiae vero obcaecati optio
-            accusamus mollitia quasi libero! Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Explicabo assumenda, reiciendis eius
-            totam et officia doloribus autem delectus maxime ex quidem natus id
-            aperiam. Cupiditate quaerat culpa inventore consequatur
-            necessitatibus? Lorem ipsum, dolor sit amet consectetur adipisicing
-            elit. Dolorum blanditiis minus officiis facere, reprehenderit
-            voluptates totam neque, dolores odio aliquam natus, nam assumenda
-            nobis fugit dolor explicabo cupiditate quibusdam? Porro. {'\n'}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-            tempore nemo incidunt aliquid maiores ad ex at laudantium, veritatis
-            accusantium libero sapiente quo officiis odio iure voluptatum
-            eveniet nihil? Sapiente. Lorem ipsum dolor sit amet consectetur,
-            adipisicing elit. Rerum cupiditate iure et ea facilis aliquid
-            distinctio ab itaque! Rerum debitis sapiente, porro soluta alias
-            quis odio incidunt iusto nesciunt obcaecati. {'\n'} {'\n'} Lorem
-            ipsum dolor sit amet, consectetur adipisicing elit. Pariatur
-            corrupti, commodi maxime officia odio asperiores temporibus quos
-            omnis ut necessitatibus minus quam, molestiae vero obcaecati optio
-            accusamus mollitia quasi libero! Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Explicabo assumenda, reiciendis eius
-            totam et officia doloribus autem delectus maxime ex quidem natus id
-            aperiam. Cupiditate quaerat culpa inventore consequatur
-            necessitatibus? Lorem ipsum, dolor sit amet consectetur adipisicing
-            elit. Dolorum blanditiis minus officiis facere, reprehenderit
-            voluptates totam neque, dolores odio aliquam natus, nam assumenda
-            nobis fugit dolor explicabo cupiditate quibusdam? Porro. {'\n'}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-            tempore nemo incidunt aliquid maiores ad ex at laudantium, veritatis
-            accusantium libero sapiente quo officiis odio iure voluptatum
-            eveniet nihil? Sapiente. Lorem ipsum dolor sit amet consectetur,
-            adipisicing elit. Rerum cupiditate iure et ea facilis aliquid
-            distinctio ab itaque! Rerum debitis sapiente, porro soluta alias
-            quis odio incidunt iusto nesciunt obcaecati.
-          </Text>
+          <Text>{description}</Text>
         </View>
         <View style={styles.horizontalFlex}>
           <Button style={styles.button}>
