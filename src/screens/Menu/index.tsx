@@ -9,7 +9,7 @@ import {fetchCategory} from 'store/slices/category';
 import {fetchMenu} from 'store/slices/menu';
 import Tag from 'components/Tag';
 import {hp} from 'utils/Constants';
-// import Greeting from './components/Greeting';
+import Greeting from './components/Greeting';
 import {RequestStatus} from 'store/utils';
 import FoodCard from 'components/FoodCard';
 import Search from './components/Search';
@@ -36,7 +36,7 @@ const Menu = ({}: Props) => {
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.fullFlex}>
-        {/* <Greeting /> */}
+        <Greeting />
         <Search
           placeholder="Enter the food item to search."
           value={search}

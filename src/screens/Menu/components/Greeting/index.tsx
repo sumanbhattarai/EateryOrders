@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {StyleSheet, View} from 'react-native';
+import moment from 'moment';
 
 import Text from 'components/Text';
 import {hp} from 'utils/Constants';
@@ -26,9 +27,10 @@ const Greeting = () => {
   const greeting: string = getGreeting();
   return (
     <View style={styles.container}>
-      <Text type="heading">{greeting}, Admin!</Text>
+      <Text type="heading">{greeting.toUpperCase()}, ADMIN!</Text>
+      <Text type="tiny">{moment().format('MMMM Do YYYY')}</Text>
     </View>
   );
 };
 
-export default Greeting;
+export default memo(Greeting);
