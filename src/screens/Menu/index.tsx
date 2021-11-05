@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {View, FlatList, Keyboard, RefreshControl} from 'react-native';
 import ContentLoader from 'react-native-easy-content-loader';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -12,10 +12,12 @@ import {hp} from 'utils/Constants';
 // import Greeting from './components/Greeting';
 import {RequestStatus} from 'store/utils';
 import FoodCard from 'components/FoodCard';
+import Search from './components/Search';
 
 interface Props {}
 
 const Menu = ({}: Props) => {
+  const [search, setSearch] = useState<string>('');
   const {status, ids, menus} = useAppSelector((state) => state.menu);
   const isLoading = status === RequestStatus.Pending;
   const dispatch = useAppDispatch();
@@ -33,6 +35,12 @@ const Menu = ({}: Props) => {
     <View style={styles.container}>
       <SafeAreaView style={styles.fullFlex}>
         {/* <Greeting /> */}
+        <Search
+          placeholder="Enter the food item to search."
+          value={search}
+          onChangeText={(val) => setSearch(val)}
+          clearSearch={() => setSearch('')}
+        />
         <ContentLoader
           loading={isLoading && ids.length < 1}
           listSize={6}
