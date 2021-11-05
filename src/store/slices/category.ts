@@ -2,7 +2,6 @@ import {
   createAsyncThunk,
   createEntityAdapter,
   createSlice,
-  PayloadAction,
 } from '@reduxjs/toolkit';
 
 import {apiAddCategory, apiGetCategory} from 'api/method/category';
@@ -71,27 +70,21 @@ const categorySlice = createSlice({
     builder.addCase(fetchCategory.pending, (state) => {
       state.status = RequestStatus.Pending;
     });
-    builder.addCase(
-      fetchCategory.fulfilled,
-      (state, {payload: data}: PayloadAction<Array<ICategory>>) => {
-        categoryAdaptor.upsertMany(state, data);
-        state.status = RequestStatus.Fulfilled;
-      },
-    );
+    builder.addCase(fetchCategory.fulfilled, (state, action) => {
+      categoryAdaptor.upsertMany(state, action.payload);
+      state.status = RequestStatus.Fulfilled;
+    });
     builder.addCase(fetchCategory.rejected, (state) => {
       state.status = RequestStatus.Rejected;
     });
     builder.addCase(addCategory.pending, (state) => {
       state.status = RequestStatus.Pending;
     });
-    builder.addCase(
-      addCategory.fulfilled,
-      (state, {payload: data}: PayloadAction<ICategory>) => {
-        categoryAdaptor.upsertOne(state, data);
-        state.status = RequestStatus.Fulfilled;
-        showSuccess(`Success! '${data.name}' has been added.`);
-      },
-    );
+    builder.addCase(addCategory.fulfilled, (state, action) => {
+      categoryAdaptor.upsertOne(state, action.payload);
+      state.status = RequestStatus.Fulfilled;
+      showSuccess(`Success! '${action.payload.name}' has been added.`);
+    });
     builder.addCase(addCategory.rejected, (state) => {
       state.status = RequestStatus.Rejected;
       showError('Failed! Something went wrong.');

@@ -2,7 +2,6 @@ import {
   createAsyncThunk,
   createEntityAdapter,
   createSlice,
-  PayloadAction,
 } from '@reduxjs/toolkit';
 
 import {apiAddFood, apiGetMenu} from 'api/method/menu';
@@ -97,22 +96,11 @@ const menuSlice = createSlice({
     builder.addCase(fetchMenu.pending, (state) => {
       state.status = RequestStatus.Pending;
     });
-    builder.addCase(
-      fetchMenu.fulfilled,
-      (
-        state,
-        {
-          payload: {foodItems, menus},
-        }: PayloadAction<{
-          foodItems: Array<IFoodItem>;
-          menus: IMappedMenus;
-        }>,
-      ) => {
-        menuAdapter.upsertMany(state, foodItems);
-        state.menus = menus;
-        state.status = RequestStatus.Fulfilled;
-      },
-    );
+    builder.addCase(fetchMenu.fulfilled, (state, action) => {
+      menuAdapter.upsertMany(state, action.payload.foodItems);
+      state.menus = action.payload.menus;
+      state.status = RequestStatus.Fulfilled;
+    });
     builder.addCase(fetchMenu.rejected, (state) => {
       state.status = RequestStatus.Rejected;
     });
