@@ -1,15 +1,7 @@
 import React, {memo} from 'react';
-import {StyleSheet, View} from 'react-native';
 import moment from 'moment';
 
 import Text from 'components/Text';
-import {hp} from 'utils/Constants';
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: hp(2),
-  },
-});
 
 const getGreeting = (): string => {
   const today = new Date();
@@ -26,10 +18,10 @@ const getGreeting = (): string => {
 const Greeting = () => {
   const greeting: string = getGreeting();
   return (
-    <View style={styles.container}>
+    <>
       <Text type="heading">{greeting.toUpperCase()}, ADMIN!</Text>
       <Text type="tiny">{moment().format('MMMM Do YYYY')}</Text>
-    </View>
+    </>
   );
 };
 
