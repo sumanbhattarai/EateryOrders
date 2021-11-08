@@ -115,9 +115,9 @@ const RootNavigator = () => {
         <Stack.Screen
           name="AddFood"
           component={AddFood}
-          options={{
-            title: 'Add a food item',
-          }}
+          options={({route}) => ({
+            title: route.params.isEdit ? 'Edit details' : 'Add a food item',
+          })}
           initialParams={{
             isEdit: false,
           }}
