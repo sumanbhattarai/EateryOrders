@@ -116,11 +116,15 @@ const AddFood = ({navigation, route}: Props) => {
       description,
     });
     if (isValid) {
-      dispatch(
-        addMenu({name, price, description, photo: 'teststring', category}),
-      );
+      if (isEdit) {
+        // TODO :Different API and Redux action dispatch.
+      } else {
+        dispatch(
+          addMenu({name, price, description, photo: 'teststring', category}),
+        );
+      }
     }
-  }, [name, price, category, description, dispatch]);
+  }, [name, price, category, description, dispatch, isEdit]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
