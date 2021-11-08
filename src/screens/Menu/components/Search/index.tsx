@@ -19,6 +19,7 @@ interface Props extends TextInputProps {
 
 const styles = StyleSheet.create({
   container: {flexDirection: 'row', alignItems: 'center'},
+  clearView: {marginLeft: -wp(6), marginTop: wp(2)},
 });
 
 const Search = ({clearSearch, value, ...rest}: Props) => {
@@ -26,7 +27,7 @@ const Search = ({clearSearch, value, ...rest}: Props) => {
     <View style={styles.container}>
       <Input value={value} {...rest} />
       {Boolean(value) && (
-        <TouchableOpacity style={{marginLeft: -wp(6)}} onPress={clearSearch}>
+        <TouchableOpacity style={styles.clearView} onPress={clearSearch}>
           <Icon name="cancel" color={Colors.black} size={wp(4)} />
         </TouchableOpacity>
       )}
