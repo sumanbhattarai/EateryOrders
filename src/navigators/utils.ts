@@ -12,7 +12,10 @@ export type BottomTabParamList = {
 
 export type RootStackParamList = {
   Home: undefined;
-  AddFood: undefined;
+  AddFood: {
+    id?: string;
+    isEdit: boolean;
+  };
   AddCategory: undefined;
   FoodDetail: {
     id: string;
