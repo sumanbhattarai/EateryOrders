@@ -1,4 +1,10 @@
-import React, {useState, useLayoutEffect, useCallback, useMemo} from 'react';
+import React, {
+  useEffect,
+  useState,
+  useLayoutEffect,
+  useCallback,
+  useMemo,
+} from 'react';
 import {
   Image,
   NativeSyntheticEvent,
@@ -27,6 +33,7 @@ import {properStringValue} from 'services/StringService';
 import {showError} from 'utils/Toast';
 import {addMenu} from 'store/slices/menu';
 import {RequestStatus} from 'store/utils';
+import {IFoodItem} from 'api/utils';
 
 const validateInputs: ({
   name,
@@ -77,8 +84,20 @@ const AddFood = ({navigation, route}: Props) => {
   const {status: menuStatus} = useAppSelector((state) => state.menu);
   const isLoading = menuStatus === RequestStatus.Pending;
   const dispatch = useAppDispatch();
-  const {isEdit} = route.params;
-  console.log({isEdit});
+  const {isEdit, id} = route.params || {};
+  const {entities: foodEntities} = useAppSelector((state) => state.menu);
+  const foodData = (isEdit ? foodEntities[id!] : {}) as IFoodItem;
+  console.log({foodData, category});
+
+  useEffect(() => {
+    if (isEdit) {
+      setName(foodData.name);
+      setPrice(foodData.price);
+      setDescription(foodData.description);
+      setPrice(foodData.price);
+      setCategory(foodData.category);
+    }
+  }, [isEdit, foodData]);
 
   const categories = useMemo(
     () =>
@@ -137,8 +156,9 @@ const AddFood = ({navigation, route}: Props) => {
       showsVerticalScrollIndicator={false}
       onScrollBeginDrag={Keyboard.dismiss}>
       <Text style={styles.heading}>
-        Enter the details of the food items you want to add. Make sure the food
-        item is not already in the list.
+        {isEdit
+          ? 'Make the changes required for the choosen food item. Make sure all the fields has a valid data.'
+          : 'Enter the details of the food items you want to add. Make sure the food item is not already in the list.'}
       </Text>
       <Text style={styles.label}>Name</Text>
       <Input
