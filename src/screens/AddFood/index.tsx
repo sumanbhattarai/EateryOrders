@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useNavigation} from '@react-navigation/core';
+import {RouteProp, useNavigation} from '@react-navigation/core';
 import {StackNavigationProp} from '@react-navigation/stack';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {ImagePickerResponse} from 'react-native-image-picker';
@@ -61,7 +61,12 @@ const validateInputs: ({
   return false;
 };
 
-const AddFood = () => {
+interface Props {
+  navigation: StackNavigationProp<RootStackParamList, 'AddFood'>;
+  route: RouteProp<RootStackParamList, 'AddFood'>;
+}
+
+const AddFood = ({navigation, route}: Props) => {
   const [name, setName] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [description, setDescription] = useState<string>('');
@@ -69,12 +74,11 @@ const AddFood = () => {
   const [heightOfDescription, setHeightOfDesciption] = useState(hp(6));
   const {openImageLibrary, pickedImage} = useImagePicker();
   const {entities, ids} = useAppSelector((state) => state.category);
-  const navigation = useNavigation<
-    StackNavigationProp<RootStackParamList, 'AddFood'>
-  >();
   const {status: menuStatus} = useAppSelector((state) => state.menu);
   const isLoading = menuStatus === RequestStatus.Pending;
   const dispatch = useAppDispatch();
+  const {isEdit} = route.params;
+  console.log({isEdit});
 
   const categories = useMemo(
     () =>
