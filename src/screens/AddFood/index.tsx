@@ -15,10 +15,9 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {RouteProp, useNavigation} from '@react-navigation/core';
+import {RouteProp} from '@react-navigation/core';
 import {StackNavigationProp} from '@react-navigation/stack';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {ImagePickerResponse} from 'react-native-image-picker';
 
 import styles from './styles';
 import Text from 'components/Text';
