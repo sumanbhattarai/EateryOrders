@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {View, ScrollView} from 'react-native';
 import {RouteProp} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import FastImage from 'react-native-fast-image';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 import styles from './styles';
 import {useAppSelector} from 'services/TypedRedux';
@@ -13,13 +14,22 @@ import Button from 'components/Button';
 import {wp} from 'utils/Constants';
 
 interface Props {
+  navigation: StackNavigationProp<RootStackParamList, 'FoodDetail'>;
   route: RouteProp<RootStackParamList, 'FoodDetail'>;
 }
 
-const Detail = ({route}: Props) => {
+const Detail = ({navigation, route}: Props) => {
   const {entities} = useAppSelector((state) => state.menu);
   const id = route.params.id;
   const {name, category, price, description} = entities[id]!;
+
+  const handleEditPress = useCallback(() => {
+    navigation.navigate('AddFood', {
+      isEdit: true,
+      id,
+    });
+  }, [id, navigation]);
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <FastImage
@@ -38,7 +48,7 @@ const Detail = ({route}: Props) => {
           <Text>{description}</Text>
         </View>
         <View style={styles.horizontalFlex}>
-          <Button style={styles.button}>
+          <Button style={styles.button} onPress={handleEditPress}>
             <Icon name="edit" size={wp(6)} color={Colors.white} />
           </Button>
           <Button style={styles.button}>
