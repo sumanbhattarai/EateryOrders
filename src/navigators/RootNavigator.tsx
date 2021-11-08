@@ -118,6 +118,9 @@ const RootNavigator = () => {
           options={{
             title: 'Add a food item',
           }}
+          initialParams={{
+            isEdit: false,
+          }}
         />
         <Stack.Screen
           name="AddCategory"
