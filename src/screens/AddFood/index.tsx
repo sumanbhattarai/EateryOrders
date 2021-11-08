@@ -1,4 +1,10 @@
-import React, {useState, useLayoutEffect, useCallback, useMemo} from 'react';
+import React, {
+  useEffect,
+  useState,
+  useLayoutEffect,
+  useCallback,
+  useMemo,
+} from 'react';
 import {
   Image,
   NativeSyntheticEvent,
@@ -9,7 +15,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useNavigation} from '@react-navigation/core';
+import {RouteProp, useNavigation} from '@react-navigation/core';
 import {StackNavigationProp} from '@react-navigation/stack';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {ImagePickerResponse} from 'react-native-image-picker';
@@ -27,6 +33,7 @@ import {properStringValue} from 'services/StringService';
 import {showError} from 'utils/Toast';
 import {addMenu} from 'store/slices/menu';
 import {RequestStatus} from 'store/utils';
+import {IFoodItem} from 'api/utils';
 
 const validateInputs: ({
   name,
@@ -61,7 +68,12 @@ const validateInputs: ({
   return false;
 };
 
-const AddFood = () => {
+interface Props {
+  navigation: StackNavigationProp<RootStackParamList, 'AddFood'>;
+  route: RouteProp<RootStackParamList, 'AddFood'>;
+}
+
+const AddFood = ({navigation, route}: Props) => {
   const [name, setName] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [description, setDescription] = useState<string>('');
@@ -69,12 +81,23 @@ const AddFood = () => {
   const [heightOfDescription, setHeightOfDesciption] = useState(hp(6));
   const {openImageLibrary, pickedImage} = useImagePicker();
   const {entities, ids} = useAppSelector((state) => state.category);
-  const navigation = useNavigation<
-    StackNavigationProp<RootStackParamList, 'AddFood'>
-  >();
   const {status: menuStatus} = useAppSelector((state) => state.menu);
   const isLoading = menuStatus === RequestStatus.Pending;
   const dispatch = useAppDispatch();
+  const {isEdit, id} = route.params || {};
+  const {entities: foodEntities} = useAppSelector((state) => state.menu);
+  const foodData = (isEdit ? foodEntities[id!] : {}) as IFoodItem;
+  console.log({foodData, category});
+
+  useEffect(() => {
+    if (isEdit) {
+      setName(foodData.name);
+      setPrice(foodData.price);
+      setDescription(foodData.description);
+      setPrice(foodData.price);
+      setCategory(foodData.category);
+    }
+  }, [isEdit, foodData]);
 
   const categories = useMemo(
     () =>
@@ -93,11 +116,15 @@ const AddFood = () => {
       description,
     });
     if (isValid) {
-      dispatch(
-        addMenu({name, price, description, photo: 'teststring', category}),
-      );
+      if (isEdit) {
+        // TODO :Different API and Redux action dispatch.
+      } else {
+        dispatch(
+          addMenu({name, price, description, photo: 'teststring', category}),
+        );
+      }
     }
-  }, [name, price, category, description, dispatch]);
+  }, [name, price, category, description, dispatch, isEdit]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -133,8 +160,9 @@ const AddFood = () => {
       showsVerticalScrollIndicator={false}
       onScrollBeginDrag={Keyboard.dismiss}>
       <Text style={styles.heading}>
-        Enter the details of the food items you want to add. Make sure the food
-        item is not already in the list.
+        {isEdit
+          ? 'Make the changes required for the choosen food item. Make sure all the fields has a valid data.'
+          : 'Enter the details of the food items you want to add. Make sure the food item is not already in the list.'}
       </Text>
       <Text style={styles.label}>Name</Text>
       <Input
