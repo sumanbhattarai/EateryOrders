@@ -86,7 +86,6 @@ const AddFood = ({navigation, route}: Props) => {
   const {isEdit, id} = route.params || {};
   const {entities: foodEntities} = useAppSelector((state) => state.menu);
   const foodData = (isEdit ? foodEntities[id!] : {}) as IFoodItem;
-  console.log({foodData, category});
 
   useEffect(() => {
     if (isEdit) {
@@ -188,7 +187,7 @@ const AddFood = ({navigation, route}: Props) => {
       <Text style={styles.label}>Category</Text>
       <DropDownPicker
         items={categories}
-        defaultValue={null}
+        defaultValue={category}
         containerStyle={styles.dropdownContainer}
         style={styles.dropdown}
         itemStyle={styles.itemStyle}
