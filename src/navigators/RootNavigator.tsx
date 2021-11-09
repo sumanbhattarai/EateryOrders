@@ -21,6 +21,7 @@ import {BottomTabParamList, RootStackParamList, TopTabParamList} from './utils';
 import Settings from 'screens/Settings';
 import Fonts from 'utils/Fonts';
 import {wp} from 'utils/Constants';
+import Colors from 'utils/Colors';
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -106,6 +107,8 @@ const RootNavigator = () => {
             fontFamily: Fonts.regular,
             fontSize: wp(3.8),
           },
+          headerBackTitleVisible: false,
+          headerTintColor: Colors.black,
         }}>
         <Stack.Screen
           name="Home"
