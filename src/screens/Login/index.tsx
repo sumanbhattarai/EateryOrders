@@ -13,6 +13,9 @@ import Text from 'components/Text';
 import Input from 'components/Input';
 import Button from 'components/Button';
 import {showError} from 'utils/Toast';
+import {useAppSelector, useAppDispatch} from 'services/TypedRedux';
+import {login} from 'store/slices/auth';
+import {RequestStatus} from 'store/utils';
 
 const validateData = ({email, password}: {email: string; password: string}) => {
   if (Boolean(email) && Boolean(password)) {
@@ -25,13 +28,15 @@ const validateData = ({email, password}: {email: string; password: string}) => {
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const {status} = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
   const handleLogin = useCallback(() => {
     const isValid = validateData({email, password});
     if (isValid) {
-      // TODO : Handle Login
+      dispatch(login({email, password}));
     }
-  }, [email, password]);
+  }, [email, password, dispatch]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -72,6 +77,7 @@ const Login = () => {
               style={styles.button}
               needsInternet
               onPress={handleLogin}
+              loading={status === RequestStatus.Pending}
             />
           </View>
         </Animatable.View>
