@@ -33,7 +33,7 @@ const styles = StyleSheet.create<Style>({
     borderTopLeftRadius: wp(2),
     borderTopRightRadius: wp(2),
     backgroundColor: Colors.white,
-    paddingVertical: wp(4),
+    paddingVertical: wp(8),
     paddingHorizontal: wp(2),
   },
   form: {},
