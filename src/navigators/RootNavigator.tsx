@@ -23,6 +23,7 @@ import Fonts from 'utils/Fonts';
 import {wp} from 'utils/Constants';
 import Colors from 'utils/Colors';
 import Login from 'screens/Login';
+import {useAppSelector} from 'services/TypedRedux';
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -98,6 +99,8 @@ const BottomNavigation = () => {
 };
 
 const RootNavigator = () => {
+  const {token} = useAppSelector((state) => state.auth);
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -111,7 +114,7 @@ const RootNavigator = () => {
           headerBackTitleVisible: false,
           headerTintColor: Colors.black,
         }}>
-        {true ? (
+        {!token ? (
           <Stack.Screen
             name="Login"
             component={Login}
