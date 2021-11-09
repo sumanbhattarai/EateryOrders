@@ -1,14 +1,9 @@
 import React from 'react';
-import {View} from 'react-native';
 
-import Text from 'components/Text';
+import OrderCard from 'components/OrderCard';
 
 const Recieved = () => {
-  return (
-    <View>
-      <Text>RECIEVED</Text>
-    </View>
-  );
+  return <OrderCard />;
 };
 
 export default Recieved;
