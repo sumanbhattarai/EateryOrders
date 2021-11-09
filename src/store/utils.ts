@@ -8,6 +8,13 @@ export enum RequestStatus {
   Rejected = 'rejected',
 }
 
+export enum OrderStatus {
+  Recieved = 'Recieved',
+  Confirmed = 'Confirmed',
+  Delivered = 'Delivered',
+  Rejected = 'Rejected',
+}
+
 export interface IMappedMenus {
   [category: string]: Array<string>;
 }
