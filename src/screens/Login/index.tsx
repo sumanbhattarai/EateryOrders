@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   View,
   Platform,
@@ -12,8 +12,27 @@ import styles from './styles';
 import Text from 'components/Text';
 import Input from 'components/Input';
 import Button from 'components/Button';
+import {showError} from 'utils/Toast';
+
+const validateData = ({email, password}: {email: string; password: string}) => {
+  if (Boolean(email) && Boolean(password)) {
+    return true;
+  }
+  showError('Failed! Make sure all the fields are valid.');
+  return false;
+};
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = useCallback(() => {
+    const isValid = validateData({email, password});
+    if (isValid) {
+      // TODO : Handle Login
+    }
+  }, [email, password]);
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -38,13 +57,22 @@ const Login = () => {
               placeholder="Email"
               autoCapitalize="none"
               autoCorrect={false}
+              value={email}
+              onChangeText={(val) => setEmail(val)}
             />
             <Input
               placeholder="Password"
               autoCapitalize="none"
               secureTextEntry
+              value={password}
+              onChangeText={(val) => setPassword(val)}
             />
-            <Button title="Login" style={styles.button} needsInternet />
+            <Button
+              title="Login"
+              style={styles.button}
+              needsInternet
+              onPress={handleLogin}
+            />
           </View>
         </Animatable.View>
       </KeyboardAvoidingView>
