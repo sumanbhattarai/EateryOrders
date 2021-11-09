@@ -1,7 +1,6 @@
 import React, {memo, ReactNode} from 'react';
 import {
   TouchableOpacity,
-  Text,
   TouchableOpacityProps,
   ViewStyle,
   TextStyle,
@@ -11,13 +10,14 @@ import {
 import styles from './styles';
 import useConnection from 'hooks/useConnection';
 import Colors from 'utils/Colors';
+import Text from 'components/Text';
 
 interface Props extends TouchableOpacityProps {
   title?: string;
   needsInternet?: boolean;
   loading?: boolean;
   style?: ViewStyle | ViewStyle[];
-  textStyle?: TextStyle | TextStyle[];
+  titleStyle?: TextStyle;
   children?: ReactNode;
 }
 
@@ -26,7 +26,7 @@ const Button = ({
   needsInternet = false,
   loading = false,
   style,
-  textStyle,
+  titleStyle,
   children,
   ...rest
 }: Props) => {
@@ -50,7 +50,9 @@ const Button = ({
       ) : children ? (
         children
       ) : (
-        <Text style={[styles.title, textStyle]}>{title}</Text>
+        <Text type="sub-heading" style={{...styles.title, ...titleStyle}}>
+          {title}
+        </Text>
       )}
     </TouchableOpacity>
   );

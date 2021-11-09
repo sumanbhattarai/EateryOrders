@@ -18,9 +18,7 @@ const styles = StyleSheet.create<Style>({
     alignItems: 'center',
   },
   title: {
-    fontSize: wp(4),
     color: Colors.white,
-    fontFamily: Fonts.regular,
   },
 });
 
