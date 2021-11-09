@@ -22,6 +22,7 @@ import Settings from 'screens/Settings';
 import Fonts from 'utils/Fonts';
 import {wp} from 'utils/Constants';
 import Colors from 'utils/Colors';
+import Login from 'screens/Login';
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -110,36 +111,46 @@ const RootNavigator = () => {
           headerBackTitleVisible: false,
           headerTintColor: Colors.black,
         }}>
-        <Stack.Screen
-          name="Home"
-          component={BottomNavigation}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="AddFood"
-          component={AddFood}
-          options={({route}) => ({
-            title: route.params.isEdit ? 'Edit details' : 'Add a food item',
-          })}
-          initialParams={{
-            isEdit: false,
-          }}
-        />
-        <Stack.Screen
-          name="AddCategory"
-          component={AddCategory}
-          options={{
-            title: 'Add a category',
-          }}
-        />
-        <Stack.Screen
-          name="FoodDetail"
-          component={Detail}
-          options={({route}) => ({
-            title: route.params.name,
-          })}
-        />
-        <Stack.Screen name="Settings" component={Settings} />
+        {true ? (
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{headerShown: false}}
+          />
+        ) : (
+          <>
+            <Stack.Screen
+              name="Home"
+              component={BottomNavigation}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="AddFood"
+              component={AddFood}
+              options={({route}) => ({
+                title: route.params.isEdit ? 'Edit details' : 'Add a food item',
+              })}
+              initialParams={{
+                isEdit: false,
+              }}
+            />
+            <Stack.Screen
+              name="AddCategory"
+              component={AddCategory}
+              options={{
+                title: 'Add a category',
+              }}
+            />
+            <Stack.Screen
+              name="FoodDetail"
+              component={Detail}
+              options={({route}) => ({
+                title: route.params.name,
+              })}
+            />
+            <Stack.Screen name="Settings" component={Settings} />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
