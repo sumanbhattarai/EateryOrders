@@ -24,6 +24,7 @@ const OrderCard = ({id}: Props) => {
     customerAddress,
     customerPhone,
     cartTotalItems,
+    status,
   } = entities[id] as IOrder;
 
   const cartItems = useMemo(
@@ -73,20 +74,22 @@ const OrderCard = ({id}: Props) => {
           </View>
         ))}
       </View>
-      <View style={styles.buttonView}>
-        <Button
-          style={{backgroundColor: Colors.success}}
-          onPress={() => {}}
-          needsInternet>
-          <Icon name="check" color={Colors.white} size={wp(4)} />
-        </Button>
-        <Button
-          style={{backgroundColor: Colors.error}}
-          onPress={() => {}}
-          needsInternet>
-          <Icon name="close" color={Colors.white} size={wp(4)} />
-        </Button>
-      </View>
+      {status !== 'Delivered' && (
+        <View style={styles.buttonView}>
+          <Button
+            style={{backgroundColor: Colors.success}}
+            onPress={() => {}}
+            needsInternet>
+            <Icon name="check" color={Colors.white} size={wp(4)} />
+          </Button>
+          <Button
+            style={{backgroundColor: Colors.error}}
+            onPress={() => {}}
+            needsInternet>
+            <Icon name="close" color={Colors.white} size={wp(4)} />
+          </Button>
+        </View>
+      )}
     </View>
   );
 };
