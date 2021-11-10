@@ -1,7 +1,12 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, FlatList, Keyboard, RefreshControl} from 'react-native';
+import {
+  View,
+  FlatList,
+  Keyboard,
+  RefreshControl,
+  SafeAreaView,
+} from 'react-native';
 import ContentLoader from 'react-native-easy-content-loader';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 import styles from './styles';
 import {useAppDispatch, useAppSelector} from 'services/TypedRedux';
