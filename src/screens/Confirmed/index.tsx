@@ -13,7 +13,7 @@ const Confirmed = () => {
   const {status, entities, ids} = useAppSelector((state) => state.order);
   const dispatch = useAppDispatch();
   const isLoading = status === RequestStatus.Pending;
-  const inReviewIds = ids.filter((el) => entities[el]?.status === 'Confirmed');
+  const confirmedIds = ids.filter((el) => entities[el]?.status === 'Confirmed');
 
   useEffect(() => {
     dispatch(getOrder());
@@ -31,7 +31,7 @@ const Confirmed = () => {
       animationDuration={1000}
       containerStyles={styles.cardContainer}>
       <FlatList
-        data={inReviewIds}
+        data={confirmedIds}
         keyExtractor={(item, index) => `${entities[item]?._id}-${index}`}
         refreshControl={
           <RefreshControl
