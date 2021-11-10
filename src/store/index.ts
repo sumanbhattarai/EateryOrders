@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import category from 'store/slices/category';
 import menu from 'store/slices/menu';
 import auth from 'store/slices/auth';
+import order from 'store/slices/order';
 
 const persistConfig = {
   key: 'root',
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   category,
   menu,
   auth,
+  order,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
