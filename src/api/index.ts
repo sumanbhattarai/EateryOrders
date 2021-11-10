@@ -15,6 +15,7 @@ const Routes = {
   GetMenu: '/list',
   Login: '/signin',
   GetOrder: '/order',
+  UpdateOrderStatus: '/orderStatus',
 };
 
 /*
