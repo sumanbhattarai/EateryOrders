@@ -25,3 +25,20 @@ export interface IMenu {
   category: string;
   item: IFoodItem[];
 }
+
+type IStatus = 'In Review' | 'Confirmed' | 'Delivered' | 'Rejected';
+
+export interface IOrder {
+  __v: number;
+  _id: string;
+  customerName: string;
+  customerAddress: string;
+  deliveryMethod: string;
+  customerEmail: string;
+  customerPhone: string;
+  cartTotalItems: Array<{
+    _id: string;
+    quantity: number;
+  }>;
+  status: IStatus;
+}
