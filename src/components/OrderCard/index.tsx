@@ -53,10 +53,16 @@ const OrderCard = () => {
         ))}
       </View>
       <View style={styles.buttonView}>
-        <Button onPress={() => {}} needsInternet>
+        <Button
+          style={{backgroundColor: Colors.success}}
+          onPress={() => {}}
+          needsInternet>
           <Icon name="check" color={Colors.white} size={wp(4)} />
         </Button>
-        <Button onPress={() => {}} needsInternet>
+        <Button
+          style={{backgroundColor: Colors.error}}
+          onPress={() => {}}
+          needsInternet>
           <Icon name="close" color={Colors.white} size={wp(4)} />
         </Button>
       </View>
