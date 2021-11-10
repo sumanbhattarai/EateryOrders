@@ -59,7 +59,7 @@ const Login = () => {
             <Text type="sub-heading">Welcome, Admin! {'\n'} </Text>
             <Text>Please, login to continue.</Text>
             <Input
-              placeholder="Email"
+              placeholder="Email or Username"
               autoCapitalize="none"
               autoCorrect={false}
               value={email}
