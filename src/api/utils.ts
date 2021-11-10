@@ -26,7 +26,7 @@ export interface IMenu {
   item: IFoodItem[];
 }
 
-type IStatus = 'In Review' | 'Confirmed' | 'Delivered' | 'Rejected';
+export type IStatus = 'In Review' | 'Confirmed' | 'Delivered' | 'Rejected';
 
 export interface IOrder {
   __v: number;
