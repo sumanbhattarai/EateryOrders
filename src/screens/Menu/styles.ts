@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-import {hp, wp} from 'utils/Constants';
+import {wp} from 'utils/Constants';
 
 const styles = StyleSheet.create({
   container: {
