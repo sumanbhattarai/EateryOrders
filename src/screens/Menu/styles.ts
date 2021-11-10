@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: wp(2),
+    paddingBottom: 0,
   },
   fullFlex: {
     flex: 1,

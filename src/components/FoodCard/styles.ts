@@ -26,7 +26,7 @@ const styles = StyleSheet.create<Style>({
     borderBottomColor: Colors.lightGrey,
     borderBottomWidth: 1,
     borderBottomRightRadius: 25,
-    marginTop: wp(2),
+    marginVertical: wp(2),
   },
   image: {
     height: 180,
