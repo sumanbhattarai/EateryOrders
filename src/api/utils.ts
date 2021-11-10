@@ -18,6 +18,7 @@ export interface IFoodItem {
   name: string;
   photo: string;
   price: string;
+  rating: string;
 }
 
 export interface IMenu {

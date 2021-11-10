@@ -19,7 +19,7 @@ type navigationType = StackNavigationProp<RootStackParamList>;
 
 const FoodCard = ({id}: Props) => {
   const {entities} = useAppSelector((state) => state.menu);
-  const {name, category, price} = entities[id]!;
+  const {name, category, price, rating} = entities[id]!;
   const navigation = useNavigation<navigationType>();
 
   const handleNavigation = () => {
@@ -39,7 +39,8 @@ const FoodCard = ({id}: Props) => {
           <View style={styles.detailRow}>
             <Text type="sub-heading">{name}</Text>
             <Text style={styles.rating}>
-              <Icon name="star" size={16} color={Colors.primary} /> 5.0
+              <Icon name="star" size={16} color={Colors.primary} />{' '}
+              {Number(rating || '0').toFixed(2)}
             </Text>
           </View>
           <View style={styles.detailRow}>
