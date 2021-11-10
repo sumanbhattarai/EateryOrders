@@ -11,7 +11,7 @@ import AddFood from 'screens/AddFood';
 import AddCategory from 'screens/AddCategory';
 import Detail from 'screens/Detail';
 import Menu from 'screens/Menu';
-import Recieved from 'screens/Recieved';
+import InReview from 'screens/InReview';
 import Delivered from 'screens/Delivered';
 import Confirmed from 'screens/Confirmed';
 import Account from 'screens/Account';
@@ -46,7 +46,11 @@ const OrderTab = () => {
             backgroundColor: Color.primary,
           },
         }}>
-        <TopTab.Screen name="Recieved" component={Recieved} />
+        <TopTab.Screen
+          name="InReview"
+          component={InReview}
+          options={{title: 'In Review'}}
+        />
         <TopTab.Screen name="Confirmed" component={Confirmed} />
         <TopTab.Screen name="Delivered" component={Delivered} />
       </TopTab.Navigator>

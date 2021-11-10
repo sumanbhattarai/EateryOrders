@@ -1,5 +1,5 @@
 export type TopTabParamList = {
-  Recieved: undefined;
+  InReview: undefined;
   Confirmed: undefined;
   Delivered: undefined;
 };

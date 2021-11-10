@@ -2,8 +2,8 @@ import React from 'react';
 
 import OrderCard from 'components/OrderCard';
 
-const Recieved = () => {
+const InReview = () => {
   return <OrderCard />;
 };
 
-export default Recieved;
+export default InReview;
