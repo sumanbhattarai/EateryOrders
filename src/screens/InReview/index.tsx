@@ -13,6 +13,7 @@ const InReview = () => {
   const {status, entities, ids} = useAppSelector((state) => state.order);
   const dispatch = useAppDispatch();
   const isLoading = status === RequestStatus.Pending;
+  const inReviewIds = ids.filter((el) => entities[el]?.status === 'In Review');
 
   useEffect(() => {
     dispatch(getOrder());
@@ -30,7 +31,7 @@ const InReview = () => {
       animationDuration={1000}
       containerStyles={styles.cardContainer}>
       <FlatList
-        data={ids}
+        data={inReviewIds}
         keyExtractor={(item, index) => `${entities[item]?._id}-${index}`}
         refreshControl={
           <RefreshControl
