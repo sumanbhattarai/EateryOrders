@@ -34,7 +34,7 @@ const Account = () => {
       },
       {
         name: optionsConstant.addFoodItem,
-        action: () => navigation.navigate('AddFood'),
+        action: () => navigation.navigate('AddFood', {isEdit: false}),
       },
       {
         name: optionsConstant.settings,
