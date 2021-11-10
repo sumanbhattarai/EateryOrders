@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {View} from 'react-native';
+import {View, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import styles from './styles';
@@ -7,9 +7,11 @@ import Text from 'components/Text';
 import Button from 'components/Button';
 import Colors from 'utils/Colors';
 import {wp} from 'utils/Constants';
-import {useAppSelector} from 'services/TypedRedux';
+import {useAppDispatch, useAppSelector} from 'services/TypedRedux';
 import {EntityId} from '@reduxjs/toolkit';
 import {IOrder} from 'api/utils';
+import {updateOrderStatus} from 'store/slices/order';
+import {OrderStatus} from 'store/utils';
 
 interface Props {
   id: EntityId;
@@ -27,6 +29,7 @@ const OrderCard = ({id}: Props) => {
     date,
     totalCost,
   } = entities[id] as IOrder;
+  const dispatch = useAppDispatch();
 
   const cartItems = useMemo(
     () =>
@@ -39,6 +42,36 @@ const OrderCard = ({id}: Props) => {
       }),
     [cartTotalItems, foodEntities],
   );
+
+  const handleClick = (action: 'accept' | 'reject') => {
+    Alert.alert(
+      `Are you sure you want to move the order to ${
+        action === 'reject'
+          ? 'spam'
+          : status === 'In Review'
+          ? 'confirmed'
+          : 'delivered'
+      } section?`,
+      '',
+      [
+        {
+          text: 'Ok',
+          onPress: () => {
+            const statusParam: OrderStatus =
+              action === 'reject'
+                ? OrderStatus.Rejected
+                : status === 'In Review'
+                ? OrderStatus.Confirmed
+                : OrderStatus.Delivered;
+            dispatch(updateOrderStatus({id, status: statusParam}));
+          },
+        },
+        {
+          text: 'Cancel',
+        },
+      ],
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -79,13 +112,13 @@ const OrderCard = ({id}: Props) => {
         <View style={styles.buttonView}>
           <Button
             style={{backgroundColor: Colors.success}}
-            onPress={() => {}}
+            onPress={() => handleClick('accept')}
             needsInternet>
             <Icon name="check" color={Colors.white} size={wp(4)} />
           </Button>
           <Button
             style={{backgroundColor: Colors.error}}
-            onPress={() => {}}
+            onPress={() => handleClick('reject')}
             needsInternet>
             <Icon name="close" color={Colors.white} size={wp(4)} />
           </Button>
