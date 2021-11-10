@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {View} from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -8,26 +8,47 @@ import Text from 'components/Text';
 import Button from 'components/Button';
 import Colors from 'utils/Colors';
 import {wp} from 'utils/Constants';
+import {useAppSelector} from 'services/TypedRedux';
+import {EntityId} from '@reduxjs/toolkit';
+import {IOrder} from 'api/utils';
 
-const orderedItem = [
-  {name: 'Chicken Momo', quantity: 1},
-  {name: 'Buff Sekuwa', quantity: 2},
-  {name: 'Buff Chhoila', quantity: 2},
-  {name: 'Biryani', quantity: 3},
-];
+interface Props {
+  id: EntityId;
+}
 
-const OrderCard = () => {
+const OrderCard = ({id}: Props) => {
+  const {entities} = useAppSelector((state) => state.order);
+  const {entities: foodEntities} = useAppSelector((state) => state.menu);
+  const {
+    customerName,
+    customerAddress,
+    customerPhone,
+    cartTotalItems,
+  } = entities[id] as IOrder;
+
+  const cartItems = useMemo(
+    () =>
+      cartTotalItems.map((el) => {
+        const foodDetails = foodEntities[el._id];
+        return {
+          name: foodDetails?.name,
+          quantity: el.quantity,
+        };
+      }),
+    [cartTotalItems, foodEntities],
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.horizontalView}>
-        <Text type="sub-heading">Abiral Bhattarai</Text>
+        <Text type="sub-heading">{customerName}</Text>
         <Text type="tiny">{moment().format('MMMM Do YYYY HH:MM:SS a')}</Text>
       </View>
       <Text>
-        Phone: <Text type="tiny">+977-9845696211</Text>
+        Phone: <Text type="tiny">{customerPhone}</Text>
       </Text>
       <Text>
-        Location: <Text type="tiny">GCES, Lamachaur, Kaski</Text>
+        Location: <Text type="tiny">{customerAddress}</Text>
       </Text>
       <Text>
         Total Cost: <Text type="tiny">Rs. 4537</Text>
@@ -41,7 +62,7 @@ const OrderCard = () => {
             <Text>Quantity</Text>
           </View>
         </View>
-        {orderedItem.map((el, index) => (
+        {cartItems.map((el, index) => (
           <View style={styles.horizontalView} key={index}>
             <View style={styles.border}>
               <Text type="tiny">{el.name}</Text>
