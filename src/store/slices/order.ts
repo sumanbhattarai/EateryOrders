@@ -2,10 +2,11 @@ import {
   createAsyncThunk,
   createEntityAdapter,
   createSlice,
+  EntityId,
 } from '@reduxjs/toolkit';
 
-import {apiGetOrders} from 'api/method/order';
-import {IOrder} from 'api/utils';
+import {apiGetOrders, apiUpdateOrderStatus} from 'api/method/order';
+import {IOrder, IStatus} from 'api/utils';
 import {RootState} from 'store/';
 import {RequestStatus} from 'store/utils';
 import {showError} from 'utils/Toast';
@@ -36,6 +37,28 @@ const getOrder = createAsyncThunk(
   },
 );
 
+const updateOrderStatus = createAsyncThunk(
+  'order/updateStatus',
+  async ({id, status}: {id: EntityId; status: IStatus}) => {
+    const response = await apiUpdateOrderStatus({id, status});
+    if (!response.success) {
+      throw new Error();
+    }
+    return {message: response.message, id, status} as {
+      message: string;
+      id: EntityId;
+      status: IStatus;
+    };
+  },
+  {
+    condition: (_, {getState}) => {
+      const rootState = getState() as RootState;
+      const {status} = rootState.order;
+      return status !== RequestStatus.Pending;
+    },
+  },
+);
+
 const orderSlice = createSlice({
   name: 'order',
   initialState,
@@ -52,8 +75,18 @@ const orderSlice = createSlice({
       state.status = RequestStatus.Fulfilled;
       orderAdaptor.upsertMany(state, action.payload);
     });
+    builder.addCase(updateOrderStatus.pending, () => {});
+    builder.addCase(updateOrderStatus.rejected, () => {
+      showError('Failed! Something went wrong');
+    });
+    builder.addCase(updateOrderStatus.fulfilled, (state, action) => {
+      orderAdaptor.updateOne(state, {
+        id: action.payload.id,
+        changes: {status: action.payload.status},
+      });
+    });
   },
 });
 
 export default orderSlice.reducer;
-export {getOrder};
+export {getOrder, updateOrderStatus};
