@@ -1,4 +1,6 @@
-import {IApiResponse, IOrder} from 'api/utils';
+import {EntityId} from '@reduxjs/toolkit';
+
+import {IApiResponse, IOrder, IStatus} from 'api/utils';
 import {makeRequest, Routes} from 'api/';
 
 const apiGetOrders = () =>
@@ -7,4 +9,11 @@ const apiGetOrders = () =>
     method: 'GET',
   });
 
-export {apiGetOrders};
+const apiUpdateOrderStatus = (data: {id: EntityId; status: IStatus}) =>
+  makeRequest<IApiResponse<{message: string}>>({
+    url: Routes.UpdateOrderStatus,
+    method: 'POST',
+    data,
+  });
+
+export {apiGetOrders, apiUpdateOrderStatus};
