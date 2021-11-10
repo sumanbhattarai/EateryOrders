@@ -14,6 +14,7 @@ const Routes = {
   AddFood: '/create',
   GetMenu: '/list',
   Login: '/signin',
+  GetOrder: '/order',
 };
 
 /*
