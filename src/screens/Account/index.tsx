@@ -11,6 +11,8 @@ import {brandName, wp, switchColor} from 'utils/Constants';
 import {RootStackParamList} from 'navigators/utils';
 import {optionsConstant} from './utils';
 import Colors from 'utils/Colors';
+import {useAppDispatch} from 'services/TypedRedux';
+import {logout} from 'store/slices/auth';
 
 type button = {
   name: string;
@@ -19,10 +21,10 @@ type button = {
 
 const Account = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
-
   const navigation = useNavigation<
     StackNavigationProp<RootStackParamList, 'Settings'>
   >();
+  const dispatch = useAppDispatch();
 
   const buttons: Array<button> = useMemo(
     () => [
@@ -51,10 +53,10 @@ const Account = () => {
       },
       {
         name: optionsConstant.logout,
-        action: () => {},
+        action: () => dispatch(logout()),
       },
     ],
-    [navigation],
+    [navigation, dispatch],
   );
 
   const renderButtons = ({item}: {item: button}) => {
