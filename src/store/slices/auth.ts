@@ -3,6 +3,7 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {RequestStatus} from 'store/utils';
 import {apiLogin} from 'api/method/auth';
 import {RootState} from 'store/index';
+import {showError} from 'utils/Toast';
 
 const initialState: {
   status: RequestStatus;
@@ -18,6 +19,10 @@ const login = createAsyncThunk(
   'auth/login',
   async ({email, password}: {email: string; password: string}) => {
     const response = await apiLogin({email, password});
+    if (!response.success) {
+      throw new Error();
+    }
+    return response.data as {token: string};
   },
   {
     condition: (_, {getState}) => {
@@ -33,14 +38,17 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(login.pending, (state, action) => {
+    builder.addCase(login.pending, (state) => {
       state.status = RequestStatus.Pending;
     });
-    builder.addCase(login.rejected, (state, action) => {
+    builder.addCase(login.rejected, (state) => {
       state.status = RequestStatus.Rejected;
+      showError('Failed! Invalid username and password.');
     });
     builder.addCase(login.fulfilled, (state, action) => {
       state.status = RequestStatus.Fulfilled;
+      state.isLoggedIn = true;
+      state.token = action.payload.token;
     });
   },
 });
