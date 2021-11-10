@@ -1,6 +1,5 @@
 import React, {useMemo} from 'react';
 import {View} from 'react-native';
-import moment from 'moment';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import styles from './styles';
@@ -25,6 +24,8 @@ const OrderCard = ({id}: Props) => {
     customerPhone,
     cartTotalItems,
     status,
+    date,
+    totalCost,
   } = entities[id] as IOrder;
 
   const cartItems = useMemo(
@@ -43,7 +44,7 @@ const OrderCard = ({id}: Props) => {
     <View style={styles.container}>
       <View style={styles.horizontalView}>
         <Text type="sub-heading">{customerName}</Text>
-        <Text type="tiny">{moment().format('MMMM Do YYYY HH:MM:SS a')}</Text>
+        <Text type="tiny">{date}</Text>
       </View>
       <Text>
         Phone: <Text type="tiny">{customerPhone}</Text>
@@ -52,7 +53,7 @@ const OrderCard = ({id}: Props) => {
         Location: <Text type="tiny">{customerAddress}</Text>
       </Text>
       <Text>
-        Total Cost: <Text type="tiny">Rs. 4537</Text>
+        Total Cost: <Text type="tiny">Rs. {totalCost}</Text>
       </Text>
       <View style={styles.table}>
         <View style={styles.horizontalView}>

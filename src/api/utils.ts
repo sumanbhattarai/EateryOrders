@@ -41,4 +41,6 @@ export interface IOrder {
     quantity: number;
   }>;
   status: IStatus;
+  date: string;
+  totalCost: string;
 }
