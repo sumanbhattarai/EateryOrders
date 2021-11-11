@@ -1,5 +1,6 @@
 // import {ImagePickerResponse} from 'react-native-image-picker';
 
+import {EntityId} from '@reduxjs/toolkit';
 import {makeRequest, Routes} from 'api/';
 import {IApiResponse, IFoodItem, IMenu} from 'api/utils';
 
@@ -22,4 +23,10 @@ const apiAddFood = (data: {
     data,
   });
 
-export {apiGetMenu, apiAddFood};
+const apiDeleteFood = (id: EntityId) =>
+  makeRequest<IApiResponse<{message: string}>>({
+    url: Routes.DeleteFood(id),
+    method: 'DELETE',
+  });
+
+export {apiGetMenu, apiAddFood, apiDeleteFood};
