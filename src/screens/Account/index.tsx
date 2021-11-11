@@ -1,5 +1,11 @@
-import React, {useMemo, useState} from 'react';
-import {View, FlatList, TouchableOpacity, Switch} from 'react-native';
+import React, {useMemo, useState, useEffect} from 'react';
+import {
+  View,
+  FlatList,
+  TouchableOpacity,
+  Switch,
+  ActivityIndicator,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -13,6 +19,8 @@ import {optionsConstant} from './utils';
 import Colors from 'utils/Colors';
 import {useAppDispatch} from 'services/TypedRedux';
 import {logout} from 'store/slices/auth';
+import {apiIsOpen, apiToggleIsOpen} from 'api/method/misc';
+import {showSuccess} from 'utils/Toast';
 
 type button = {
   name: string;
@@ -21,10 +29,22 @@ type button = {
 
 const Account = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const navigation = useNavigation<
     StackNavigationProp<RootStackParamList, 'Settings'>
   >();
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    (async () => {
+      const response = await apiIsOpen();
+      if (response.success) {
+        const status = response.data?.[0].isOpen as boolean;
+        setLoading(false);
+        setIsOpen(status);
+      }
+    })();
+  }, []);
 
   const buttons: Array<button> = useMemo(
     () => [
@@ -42,9 +62,14 @@ const Account = () => {
       },
       {
         name: optionsConstant.hotelOpenStatus,
-        action: (val: boolean) => {
-          setIsOpen(val);
-          // TODO: API Call
+        action: async (val: boolean) => {
+          const response = await apiToggleIsOpen(val);
+          if (response.success) {
+            setIsOpen(val);
+            showSuccess(
+              `Success! Hotel has been ${val ? 'opened' : 'closed'}.`,
+            );
+          }
         },
       },
       {
@@ -65,13 +90,17 @@ const Account = () => {
         <View style={styles.horizontalFlex}>
           <Text>{item.name}</Text>
           {item.name === optionsConstant.hotelOpenStatus ? (
-            <Switch
-              trackColor={switchColor}
-              thumbColor={Colors.white}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={item.action}
-              value={isOpen}
-            />
+            loading ? (
+              <ActivityIndicator size="small" color={Colors.black} />
+            ) : (
+              <Switch
+                trackColor={switchColor}
+                thumbColor={Colors.white}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={item.action}
+                value={isOpen}
+              />
+            )
           ) : (
             <TouchableOpacity onPress={item.action}>
               <Icon

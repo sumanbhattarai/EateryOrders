@@ -19,6 +19,7 @@ const Routes = {
   UpdateOrderStatus: '/orderStatus',
   DeleteFood: (id: EntityId) => `/delete/${id}`,
   EditFood: (id: EntityId) => `/edit/${id}`,
+  IsOpen: '/isOpen',
 };
 
 /*
