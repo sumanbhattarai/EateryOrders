@@ -124,13 +124,21 @@ const AddFood = ({navigation, route}: Props) => {
             name,
             price,
             description,
-            photo: 'teststring',
+            photo:
+              'https://merriam-webster.com/assets/mw/images/article/art-wap-article-main/cappuccino-2029-e80b7c6d318c7862df2c4c8623a11f99@1x.jpg',
             category,
           }),
         );
       } else {
         dispatch(
-          addMenu({name, price, description, photo: 'teststring', category}),
+          addMenu({
+            name,
+            price,
+            description,
+            photo:
+              'https://merriam-webster.com/assets/mw/images/article/art-wap-article-main/cappuccino-2029-e80b7c6d318c7862df2c4c8623a11f99@1x.jpg',
+            category,
+          }),
         );
       }
     }
