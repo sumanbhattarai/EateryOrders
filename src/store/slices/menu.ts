@@ -5,7 +5,12 @@ import {
   EntityId,
 } from '@reduxjs/toolkit';
 
-import {apiAddFood, apiDeleteFood, apiGetMenu} from 'api/method/menu';
+import {
+  apiAddFood,
+  apiDeleteFood,
+  apiEditFood,
+  apiGetMenu,
+} from 'api/method/menu';
 import {IFoodItem} from 'api/utils';
 import {
   getFoodItemArray,
@@ -87,6 +92,44 @@ const addMenu = createAsyncThunk(
   },
 );
 
+const editMenu = createAsyncThunk(
+  'menu/edit',
+  async ({
+    id,
+    name,
+    category,
+    price,
+    photo,
+    description,
+  }: {
+    id: EntityId;
+    name: string;
+    category: string;
+    price: string;
+    photo: string; // TODO: Have to change it to ImagePickerResponse
+    description: string;
+  }) => {
+    const response = await apiEditFood(id, {
+      name,
+      category,
+      price,
+      photo,
+      description,
+    });
+    if (!response.success) {
+      throw new Error(response.message);
+    }
+    return response.data as IFoodItem;
+  },
+  {
+    condition: (_, {getState}) => {
+      const rootState = getState() as RootState;
+      const {status} = rootState.menu;
+      return status !== RequestStatus.Pending;
+    },
+  },
+);
+
 const deleteMenu = createAsyncThunk(
   'menu/delete',
   async (id: EntityId) => {
@@ -155,8 +198,29 @@ const menuSlice = createSlice({
         `Success! ${state.entities[action.meta.arg]?.name} has been deleted.`,
       );
     });
+    builder.addCase(editMenu.pending, (state) => {
+      state.status = RequestStatus.Pending;
+    });
+    builder.addCase(editMenu.rejected, (state) => {
+      state.status = RequestStatus.Rejected;
+      showError('Failed! Something went wrong.');
+    });
+    builder.addCase(editMenu.fulfilled, (state, action) => {
+      menuAdapter.updateOne(state, {
+        id: action.meta.arg.id,
+        changes: {
+          name: action.meta.arg.name,
+          photo: action.meta.arg.photo,
+          price: action.meta.arg.price,
+          description: action.meta.arg.description,
+          category: action.meta.arg.category,
+        },
+      });
+      state.status = RequestStatus.Fulfilled;
+      showSuccess('Success! Item has been successfully modified.');
+    });
   },
 });
 
 export default menuSlice.reducer;
-export {fetchMenu, addMenu, deleteMenu};
+export {fetchMenu, addMenu, deleteMenu, editMenu};

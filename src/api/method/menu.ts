@@ -29,4 +29,20 @@ const apiDeleteFood = (id: EntityId) =>
     method: 'DELETE',
   });
 
-export {apiGetMenu, apiAddFood, apiDeleteFood};
+const apiEditFood = (
+  id: EntityId,
+  data: {
+    name: string;
+    category: string;
+    price: string;
+    photo: string; // TODO: Have to change it to ImagePickerResponse
+    description: string;
+  },
+) =>
+  makeRequest<IApiResponse<IFoodItem>>({
+    url: Routes.EditFood(id),
+    method: 'POST',
+    data,
+  });
+
+export {apiGetMenu, apiAddFood, apiDeleteFood, apiEditFood};

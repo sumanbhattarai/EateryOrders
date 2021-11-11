@@ -18,6 +18,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {RouteProp} from '@react-navigation/core';
 import {StackNavigationProp} from '@react-navigation/stack';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {EntityId} from '@reduxjs/toolkit';
 
 import styles from './styles';
 import Text from 'components/Text';
@@ -30,7 +31,7 @@ import {RootStackParamList} from 'navigators/utils';
 import {useAppSelector, useAppDispatch} from 'services/TypedRedux';
 import {properStringValue} from 'services/StringService';
 import {showError} from 'utils/Toast';
-import {addMenu} from 'store/slices/menu';
+import {addMenu, editMenu} from 'store/slices/menu';
 import {RequestStatus} from 'store/utils';
 import {IFoodItem} from 'api/utils';
 
@@ -80,11 +81,12 @@ const AddFood = ({navigation, route}: Props) => {
   const [heightOfDescription, setHeightOfDesciption] = useState(hp(6));
   const {openImageLibrary, pickedImage} = useImagePicker();
   const {entities, ids} = useAppSelector((state) => state.category);
-  const {status: menuStatus} = useAppSelector((state) => state.menu);
+  const {status: menuStatus, entities: foodEntities} = useAppSelector(
+    (state) => state.menu,
+  );
   const isLoading = menuStatus === RequestStatus.Pending;
   const dispatch = useAppDispatch();
   const {isEdit, id} = route.params || {};
-  const {entities: foodEntities} = useAppSelector((state) => state.menu);
   const foodData = (isEdit ? foodEntities[id!] : {}) as IFoodItem;
 
   useEffect(() => {
@@ -115,14 +117,24 @@ const AddFood = ({navigation, route}: Props) => {
     });
     if (isValid) {
       if (isEdit) {
-        // TODO :Different API and Redux action dispatch.
+        const foodId = id as EntityId;
+        dispatch(
+          editMenu({
+            id: foodId,
+            name,
+            price,
+            description,
+            photo: 'teststring',
+            category,
+          }),
+        );
       } else {
         dispatch(
           addMenu({name, price, description, photo: 'teststring', category}),
         );
       }
     }
-  }, [name, price, category, description, dispatch, isEdit]);
+  }, [name, price, category, description, dispatch, isEdit, id]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
