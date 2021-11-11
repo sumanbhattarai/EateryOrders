@@ -19,7 +19,7 @@ type navigationType = StackNavigationProp<RootStackParamList>;
 
 const FoodCard = ({id}: Props) => {
   const {entities} = useAppSelector((state) => state.menu);
-  const {name, category, price, rating} = entities[id]!;
+  const {name, category, price, rating, photo} = entities[id]!;
   const navigation = useNavigation<navigationType>();
 
   const handleNavigation = () => {
@@ -31,7 +31,8 @@ const FoodCard = ({id}: Props) => {
       <View style={styles.container}>
         <View>
           <FastImage
-            source={require('assets/images/pizza.png')}
+            // source={require('assets/images/pizza.png')}
+            source={{uri: photo}}
             style={styles.image}
           />
         </View>

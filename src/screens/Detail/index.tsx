@@ -23,7 +23,7 @@ interface Props {
 const Detail = ({navigation, route}: Props) => {
   const {status, entities} = useAppSelector((state) => state.menu);
   const id = route.params.id;
-  const {name, category, price, description} = entities[id]!;
+  const {name, category, price, description, photo} = entities[id]!;
   const dispatch = useAppDispatch();
 
   const handleEditPress = useCallback(() => {
@@ -40,7 +40,8 @@ const Detail = ({navigation, route}: Props) => {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <FastImage
-        source={require('assets/images/pizza.png')}
+        // source={require('assets/images/pizza.png')}
+        source={{uri: photo}}
         style={styles.image}
       />
       <View style={styles.informationBox}>

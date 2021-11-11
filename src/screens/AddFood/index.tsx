@@ -214,6 +214,8 @@ const AddFood = ({navigation, route}: Props) => {
         source={
           pickedImage
             ? {uri: pickedImage.uri}
+            : isEdit
+            ? {uri: foodData.photo}
             : require('assets/images/default-food.png')
         }
         style={styles.image}
