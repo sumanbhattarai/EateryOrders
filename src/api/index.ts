@@ -1,3 +1,4 @@
+import {EntityId} from '@reduxjs/toolkit';
 import axios, {AxiosRequestConfig} from 'axios';
 
 import Logger from 'utils/Logger';
@@ -16,6 +17,7 @@ const Routes = {
   Login: '/signin',
   GetOrder: '/order',
   UpdateOrderStatus: '/orderStatus',
+  DeleteFood: (id: EntityId) => `/delete/${id}`,
 };
 
 /*
