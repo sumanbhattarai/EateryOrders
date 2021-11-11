@@ -9,7 +9,7 @@ const apiGetOrders = () =>
     method: 'GET',
   });
 
-const apiUpdateOrderStatus = (data: {id: EntityId; status: IStatus}) =>
+const apiUpdateOrderStatus = (data: {_id: EntityId; status: IStatus}) =>
   makeRequest<IApiResponse<{message: string}>>({
     url: Routes.UpdateOrderStatus,
     method: 'POST',

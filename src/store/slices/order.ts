@@ -40,7 +40,7 @@ const getOrder = createAsyncThunk(
 const updateOrderStatus = createAsyncThunk(
   'order/updateStatus',
   async ({id, status}: {id: EntityId; status: IStatus}) => {
-    const response = await apiUpdateOrderStatus({id, status});
+    const response = await apiUpdateOrderStatus({_id: id, status});
     if (!response.success) {
       throw new Error();
     }
