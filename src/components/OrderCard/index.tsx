@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 import {View, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import {EntityId} from '@reduxjs/toolkit';
 
 import styles from './styles';
 import Text from 'components/Text';
@@ -8,7 +9,6 @@ import Button from 'components/Button';
 import Colors from 'utils/Colors';
 import {wp} from 'utils/Constants';
 import {useAppDispatch, useAppSelector} from 'services/TypedRedux';
-import {EntityId} from '@reduxjs/toolkit';
 import {IOrder} from 'api/utils';
 import {updateOrderStatus} from 'store/slices/order';
 import {OrderStatus} from 'store/utils';
