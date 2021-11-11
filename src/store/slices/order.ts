@@ -6,9 +6,9 @@ import {
 } from '@reduxjs/toolkit';
 
 import {apiGetOrders, apiUpdateOrderStatus} from 'api/method/order';
-import {IOrder, IStatus} from 'api/utils';
+import {IOrder} from 'api/utils';
 import {RootState} from 'store/';
-import {RequestStatus} from 'store/utils';
+import {OrderStatus, RequestStatus} from 'store/utils';
 import {showError, showSuccess} from 'utils/Toast';
 
 const orderAdaptor = createEntityAdapter<IOrder>({
@@ -45,7 +45,7 @@ const getOrder = createAsyncThunk(
 
 const updateOrderStatus = createAsyncThunk(
   'order/updateStatus',
-  async ({id, status}: {id: EntityId; status: IStatus}) => {
+  async ({id, status}: {id: EntityId; status: OrderStatus}) => {
     const response = await apiUpdateOrderStatus({_id: id, status});
     if (!response.success) {
       throw new Error();
@@ -53,7 +53,7 @@ const updateOrderStatus = createAsyncThunk(
     return {message: response.message, id, status} as {
       message: string;
       id: EntityId;
-      status: IStatus;
+      status: OrderStatus;
     };
   },
   {
