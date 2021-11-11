@@ -6,14 +6,17 @@ import styles from './styles';
 import OrderCard from 'components/OrderCard';
 import {useAppSelector, useAppDispatch} from 'services/TypedRedux';
 import {getOrder} from 'store/slices/order';
-import {RequestStatus} from 'store/utils';
+import {OrderStatus, RequestStatus} from 'store/utils';
 import {hp} from 'utils/Constants';
+import Empty from 'components/Empty';
 
 const InReview = () => {
   const {status, entities, ids} = useAppSelector((state) => state.order);
   const dispatch = useAppDispatch();
   const isLoading = status === RequestStatus.Pending;
-  const inReviewIds = ids.filter((el) => entities[el]?.status === 'In Review');
+  const inReviewIds = ids.filter(
+    (el) => entities[el]?.status === OrderStatus.InReview,
+  );
 
   useEffect(() => {
     dispatch(getOrder());
@@ -40,6 +43,7 @@ const InReview = () => {
           />
         }
         renderItem={({item}) => <OrderCard id={item} />}
+        ListEmptyComponent={() => <Empty />}
       />
     </ContentLoader>
   );

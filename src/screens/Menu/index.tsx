@@ -19,6 +19,7 @@ import {RequestStatus} from 'store/utils';
 import FoodCard from 'components/FoodCard';
 import Search from './components/Search';
 import useFoodSearch from './hooks/useFoodSearch';
+import Empty from 'components/Empty';
 
 interface Props {}
 
@@ -83,6 +84,15 @@ const Menu = ({}: Props) => {
                 </View>
               );
             }}
+            ListEmptyComponent={() => (
+              <Empty
+                message={
+                  search
+                    ? 'Sorry, no matching results found.'
+                    : 'Currenlty, there are no any food items. Please add some food items from account section.'
+                }
+              />
+            )}
           />
         </ContentLoader>
       </SafeAreaView>

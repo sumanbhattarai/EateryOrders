@@ -6,14 +6,17 @@ import styles from './styles';
 import OrderCard from 'components/OrderCard';
 import {useAppSelector, useAppDispatch} from 'services/TypedRedux';
 import {getOrder} from 'store/slices/order';
-import {RequestStatus} from 'store/utils';
+import {OrderStatus, RequestStatus} from 'store/utils';
 import {hp} from 'utils/Constants';
+import Empty from 'components/Empty';
 
 const Confirmed = () => {
   const {status, entities, ids} = useAppSelector((state) => state.order);
   const dispatch = useAppDispatch();
   const isLoading = status === RequestStatus.Pending;
-  const confirmedIds = ids.filter((el) => entities[el]?.status === 'Confirmed');
+  const confirmedIds = ids.filter(
+    (el) => entities[el]?.status === OrderStatus.Confirmed,
+  );
 
   useEffect(() => {
     dispatch(getOrder());
@@ -40,6 +43,7 @@ const Confirmed = () => {
           />
         }
         renderItem={({item}) => <OrderCard id={item} />}
+        ListEmptyComponent={() => <Empty />}
       />
     </ContentLoader>
   );
