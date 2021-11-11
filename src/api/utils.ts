@@ -1,3 +1,5 @@
+import {OrderStatus} from 'store/utils';
+
 export interface IApiResponse<T> {
   success: boolean;
   data?: T;
@@ -24,4 +26,21 @@ export interface IFoodItem {
 export interface IMenu {
   category: string;
   item: IFoodItem[];
+}
+
+export interface IOrder {
+  __v: number;
+  _id: string;
+  customerName: string;
+  customerAddress: string;
+  deliveryMethod: string;
+  customerEmail: string;
+  customerPhone: string;
+  cartTotalItems: Array<{
+    _id: string;
+    quantity: number;
+  }>;
+  status: OrderStatus;
+  date: string;
+  totalCost: string;
 }

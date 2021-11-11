@@ -9,11 +9,11 @@ import {getOrder} from 'store/slices/order';
 import {RequestStatus} from 'store/utils';
 import {hp} from 'utils/Constants';
 
-const InReview = () => {
+const SpamOrders = () => {
   const {status, entities, ids} = useAppSelector((state) => state.order);
   const dispatch = useAppDispatch();
   const isLoading = status === RequestStatus.Pending;
-  const inReviewIds = ids.filter((el) => entities[el]?.status === 'In Review');
+  const inReviewIds = ids.filter((el) => entities[el]?.status === 'Rejected');
 
   useEffect(() => {
     dispatch(getOrder());
@@ -45,4 +45,4 @@ const InReview = () => {
   );
 };
 
-export default InReview;
+export default SpamOrders;

@@ -41,7 +41,7 @@ const Button = ({
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      disabled={!pressable}
+      disabled={!pressable || loading}
       // eslint-disable-next-line react-native/no-inline-styles
       style={[styles.container, {opacity: pressable ? 1 : 0.7}, style]}
       {...rest}>

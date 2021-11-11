@@ -1,11 +1,10 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, SafeAreaView} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Entypo';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 import AddFood from 'screens/AddFood';
 import AddCategory from 'screens/AddCategory';
@@ -24,6 +23,7 @@ import {wp} from 'utils/Constants';
 import Colors from 'utils/Colors';
 import Login from 'screens/Login';
 import {useAppSelector} from 'services/TypedRedux';
+import SpamOrders from 'screens/SpamOrders';
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -156,6 +156,11 @@ const RootNavigator = () => {
               })}
             />
             <Stack.Screen name="Settings" component={Settings} />
+            <Stack.Screen
+              name="SpamOrders"
+              component={SpamOrders}
+              options={{title: 'Spam Orders'}}
+            />
           </>
         )}
       </Stack.Navigator>

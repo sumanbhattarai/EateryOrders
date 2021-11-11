@@ -49,7 +49,7 @@ const Account = () => {
       },
       {
         name: optionsConstant.ordersHistory,
-        action: () => {},
+        action: () => navigation.navigate('SpamOrders'),
       },
       {
         name: optionsConstant.logout,

@@ -23,4 +23,5 @@ export type RootStackParamList = {
     name: string;
   };
   Settings: undefined;
+  SpamOrders: undefined;
 };
