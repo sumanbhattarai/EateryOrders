@@ -15,6 +15,7 @@ import category from 'store/slices/category';
 import menu from 'store/slices/menu';
 import auth from 'store/slices/auth';
 import order from 'store/slices/order';
+import misc from 'store/slices/misc';
 
 const persistConfig = {
   key: 'root',
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   menu,
   auth,
   order,
+  misc,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
