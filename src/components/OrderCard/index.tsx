@@ -33,7 +33,7 @@ const OrderCard = ({id}: Props) => {
   } = entities[id] as IOrder;
   const dispatch = useAppDispatch();
   const showButtons =
-    status === (OrderStatus.InReview || OrderStatus.Confirmed);
+    status === OrderStatus.InReview || status === OrderStatus.Confirmed;
 
   const cartItems = useMemo(
     () =>

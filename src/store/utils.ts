@@ -9,7 +9,7 @@ export enum RequestStatus {
 }
 
 export enum OrderStatus {
-  InReview = 'InReview',
+  InReview = 'In Review',
   Confirmed = 'Confirmed',
   Delivered = 'Delivered',
   Rejected = 'Rejected',
