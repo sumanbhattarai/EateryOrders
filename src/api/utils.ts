@@ -1,3 +1,5 @@
+import {OrderStatus} from 'store/utils';
+
 export interface IApiResponse<T> {
   success: boolean;
   data?: T;
@@ -26,8 +28,6 @@ export interface IMenu {
   item: IFoodItem[];
 }
 
-export type IStatus = 'In Review' | 'Confirmed' | 'Delivered' | 'Rejected';
-
 export interface IOrder {
   __v: number;
   _id: string;
@@ -40,7 +40,7 @@ export interface IOrder {
     _id: string;
     quantity: number;
   }>;
-  status: IStatus;
+  status: OrderStatus;
   date: string;
   totalCost: string;
 }
