@@ -23,6 +23,7 @@ import {wp} from 'utils/Constants';
 import Colors from 'utils/Colors';
 import Login from 'screens/Login';
 import {useAppSelector} from 'services/TypedRedux';
+import SpamOrders from 'screens/SpamOrders';
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -155,6 +156,11 @@ const RootNavigator = () => {
               })}
             />
             <Stack.Screen name="Settings" component={Settings} />
+            <Stack.Screen
+              name="SpamOrders"
+              component={SpamOrders}
+              options={{title: 'Spam Orders'}}
+            />
           </>
         )}
       </Stack.Navigator>
