@@ -124,8 +124,9 @@ const AddFood = ({navigation, route}: Props) => {
             name,
             price,
             description,
-            photo:
-              'https://merriam-webster.com/assets/mw/images/article/art-wap-article-main/cappuccino-2029-e80b7c6d318c7862df2c4c8623a11f99@1x.jpg',
+            photo: pickedImage
+              ? 'https://merriam-webster.com/assets/mw/images/article/art-wap-article-main/cappuccino-2029-e80b7c6d318c7862df2c4c8623a11f99@1x.jpg'
+              : foodData.photo,
             category,
           }),
         );
@@ -142,7 +143,17 @@ const AddFood = ({navigation, route}: Props) => {
         );
       }
     }
-  }, [name, price, category, description, dispatch, isEdit, id]);
+  }, [
+    name,
+    price,
+    category,
+    description,
+    dispatch,
+    isEdit,
+    id,
+    pickedImage,
+    foodData,
+  ]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
