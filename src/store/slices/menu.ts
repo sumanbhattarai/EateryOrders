@@ -2,9 +2,10 @@ import {
   createAsyncThunk,
   createEntityAdapter,
   createSlice,
+  EntityId,
 } from '@reduxjs/toolkit';
 
-import {apiAddFood, apiGetMenu} from 'api/method/menu';
+import {apiAddFood, apiDeleteFood, apiGetMenu} from 'api/method/menu';
 import {IFoodItem} from 'api/utils';
 import {
   getFoodItemArray,
@@ -86,6 +87,24 @@ const addMenu = createAsyncThunk(
   },
 );
 
+const deleteMenu = createAsyncThunk(
+  'menu/delete',
+  async (id: EntityId) => {
+    const response = await apiDeleteFood(id);
+    if (!response.success) {
+      throw new Error();
+    }
+    return response.data?.message as string;
+  },
+  {
+    condition: (_, {getState}) => {
+      const rootState = getState() as RootState;
+      const {status} = rootState.menu;
+      return status !== RequestStatus.Pending;
+    },
+  },
+);
+
 const menuSlice = createSlice({
   name: 'menu',
   initialState,
@@ -119,8 +138,25 @@ const menuSlice = createSlice({
       showError(action.error.message || 'Failed! Something went wrong.');
       state.status = RequestStatus.Rejected;
     });
+    builder.addCase(deleteMenu.pending, (state) => {
+      state.status = RequestStatus.Pending;
+    });
+    builder.addCase(deleteMenu.rejected, (state) => {
+      state.status = RequestStatus.Rejected;
+      showError('Failed! Something went wrong.');
+    });
+    builder.addCase(deleteMenu.fulfilled, (state, action) => {
+      state.status = RequestStatus.Fulfilled;
+      const cat = state.entities[action.meta.arg]?.category as string;
+      state.menus[cat] = state.menus[cat].filter(
+        (el) => el !== action.meta.arg,
+      );
+      showSuccess(
+        `Success! ${state.entities[action.meta.arg]?.name} has been deleted.`,
+      );
+    });
   },
 });
 
 export default menuSlice.reducer;
-export {fetchMenu, addMenu};
+export {fetchMenu, addMenu, deleteMenu};
