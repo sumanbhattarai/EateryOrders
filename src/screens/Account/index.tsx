@@ -48,7 +48,7 @@ const Account = () => {
         },
       },
       {
-        name: optionsConstant.ordersHistory,
+        name: optionsConstant.spamOrders,
         action: () => navigation.navigate('SpamOrders'),
       },
       {
