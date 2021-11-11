@@ -12,6 +12,7 @@ const styles = StyleSheet.create<Style>({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingVertical: wp(16),
   },
   message: {
     textAlign: 'center',
