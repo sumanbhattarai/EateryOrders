@@ -9,14 +9,20 @@ import {apiGetOrders, apiUpdateOrderStatus} from 'api/method/order';
 import {IOrder, IStatus} from 'api/utils';
 import {RootState} from 'store/';
 import {RequestStatus} from 'store/utils';
-import {showError} from 'utils/Toast';
+import {showError, showSuccess} from 'utils/Toast';
 
 const orderAdaptor = createEntityAdapter<IOrder>({
   selectId: (item) => item._id,
 });
 
-const initialState = orderAdaptor.getInitialState<{status: RequestStatus}>({
+const initialState = orderAdaptor.getInitialState<{
+  status: RequestStatus;
+  individualOrderStatus: {
+    [id: EntityId]: RequestStatus;
+  };
+}>({
   status: RequestStatus.Idle,
+  individualOrderStatus: {},
 });
 
 const getOrder = createAsyncThunk(
@@ -51,10 +57,10 @@ const updateOrderStatus = createAsyncThunk(
     };
   },
   {
-    condition: (_, {getState}) => {
+    condition: ({id}, {getState}) => {
       const rootState = getState() as RootState;
-      const {status} = rootState.order;
-      return status !== RequestStatus.Pending;
+      const {individualOrderStatus} = rootState.order;
+      return individualOrderStatus[id] !== RequestStatus.Pending;
     },
   },
 );
@@ -75,15 +81,26 @@ const orderSlice = createSlice({
       state.status = RequestStatus.Fulfilled;
       orderAdaptor.upsertMany(state, action.payload);
     });
-    builder.addCase(updateOrderStatus.pending, () => {});
-    builder.addCase(updateOrderStatus.rejected, () => {
+    builder.addCase(updateOrderStatus.pending, (state, action) => {
+      state.individualOrderStatus[action.meta.arg.id] = RequestStatus.Pending;
+    });
+    builder.addCase(updateOrderStatus.rejected, (state, action) => {
       showError('Failed! Something went wrong');
+      state.individualOrderStatus[action.meta.arg.id] = RequestStatus.Rejected;
     });
     builder.addCase(updateOrderStatus.fulfilled, (state, action) => {
       orderAdaptor.updateOne(state, {
         id: action.payload.id,
         changes: {status: action.payload.status},
       });
+      showSuccess(
+        `Success! Order by ${
+          state.entities[action.payload.id]?.customerName
+        } of price Rs. ${
+          state.entities[action.payload.id]?.totalCost
+        } has been shifted.`,
+      );
+      state.individualOrderStatus[action.meta.arg.id] = RequestStatus.Fulfilled;
     });
   },
 });

@@ -11,14 +11,16 @@ import {wp} from 'utils/Constants';
 import {useAppDispatch, useAppSelector} from 'services/TypedRedux';
 import {IOrder} from 'api/utils';
 import {updateOrderStatus} from 'store/slices/order';
-import {OrderStatus} from 'store/utils';
+import {OrderStatus, RequestStatus} from 'store/utils';
 
 interface Props {
   id: EntityId;
 }
 
 const OrderCard = ({id}: Props) => {
-  const {entities} = useAppSelector((state) => state.order);
+  const {entities, individualOrderStatus} = useAppSelector(
+    (state) => state.order,
+  );
   const {entities: foodEntities} = useAppSelector((state) => state.menu);
   const {
     customerName,
@@ -113,13 +115,15 @@ const OrderCard = ({id}: Props) => {
           <Button
             style={{backgroundColor: Colors.success}}
             onPress={() => handleClick('accept')}
+            loading={individualOrderStatus[id] === RequestStatus.Pending}
             needsInternet>
             <Icon name="check" color={Colors.white} size={wp(4)} />
           </Button>
           <Button
             style={{backgroundColor: Colors.error}}
             onPress={() => handleClick('reject')}
-            needsInternet>
+            needsInternet
+            loading={individualOrderStatus[id] === RequestStatus.Pending}>
             <Icon name="close" color={Colors.white} size={wp(4)} />
           </Button>
         </View>
