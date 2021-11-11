@@ -32,6 +32,8 @@ const OrderCard = ({id}: Props) => {
     totalCost,
   } = entities[id] as IOrder;
   const dispatch = useAppDispatch();
+  const showButtons =
+    status === (OrderStatus.InReview || OrderStatus.Confirmed);
 
   const cartItems = useMemo(
     () =>
@@ -50,7 +52,7 @@ const OrderCard = ({id}: Props) => {
       `Are you sure you want to move the order to ${
         action === 'reject'
           ? 'spam'
-          : status === 'In Review'
+          : status === OrderStatus.InReview
           ? 'confirmed'
           : 'delivered'
       } section?`,
@@ -62,7 +64,7 @@ const OrderCard = ({id}: Props) => {
             const statusParam: OrderStatus =
               action === 'reject'
                 ? OrderStatus.Rejected
-                : status === 'In Review'
+                : status === OrderStatus.InReview
                 ? OrderStatus.Confirmed
                 : OrderStatus.Delivered;
             dispatch(updateOrderStatus({id, status: statusParam}));
@@ -110,7 +112,7 @@ const OrderCard = ({id}: Props) => {
           </View>
         ))}
       </View>
-      {status !== 'Delivered' && (
+      {showButtons && (
         <View style={styles.buttonView}>
           <Button
             style={{backgroundColor: Colors.success}}
