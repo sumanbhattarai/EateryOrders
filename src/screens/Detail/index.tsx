@@ -6,12 +6,14 @@ import FastImage from 'react-native-fast-image';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 import styles from './styles';
-import {useAppSelector} from 'services/TypedRedux';
+import {useAppDispatch, useAppSelector} from 'services/TypedRedux';
 import {RootStackParamList} from 'navigators/utils';
 import Text from 'components/Text';
 import Colors from 'utils/Colors';
 import Button from 'components/Button';
 import {wp} from 'utils/Constants';
+import {deleteMenu} from 'store/slices/menu';
+import {RequestStatus} from 'store/utils';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'FoodDetail'>;
@@ -19,9 +21,10 @@ interface Props {
 }
 
 const Detail = ({navigation, route}: Props) => {
-  const {entities} = useAppSelector((state) => state.menu);
+  const {status, entities} = useAppSelector((state) => state.menu);
   const id = route.params.id;
   const {name, category, price, description} = entities[id]!;
+  const dispatch = useAppDispatch();
 
   const handleEditPress = useCallback(() => {
     navigation.navigate('AddFood', {
@@ -29,6 +32,10 @@ const Detail = ({navigation, route}: Props) => {
       id,
     });
   }, [id, navigation]);
+
+  const handleDeletePress = useCallback(() => {
+    dispatch(deleteMenu(id)).then(() => navigation.goBack());
+  }, [dispatch, id, navigation]);
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -51,7 +58,11 @@ const Detail = ({navigation, route}: Props) => {
           <Button style={styles.button} onPress={handleEditPress}>
             <Icon name="edit" size={wp(6)} color={Colors.white} />
           </Button>
-          <Button style={styles.button}>
+          <Button
+            style={styles.button}
+            onPress={handleDeletePress}
+            needsInternet
+            loading={status === RequestStatus.Pending}>
             <Icon name="delete" size={wp(6)} color={Colors.white} />
           </Button>
         </View>
